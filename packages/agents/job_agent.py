@@ -338,12 +338,15 @@ async def run_job_agent(state: dict[str, Any]) -> dict[str, Any]:
     scheme_out: list[dict[str, Any]] = state.get("scheme_out", [])
 
     # Extract scheme IDs where has_jobs is True
-    scheme_ids_with_jobs = [
-        s["id"] for s in scheme_out
-        if s.get("has_jobs") or (
-            isinstance(s.get("scheme"), dict) and s["scheme"].get("has_jobs")
-        )
-    ]
+    scheme_ids_with_jobs = []
+    for s in scheme_out:
+        nested_scheme = s.get("scheme") if isinstance(s.get("scheme"), dict) else None
+        has_jobs = s.get("has_jobs") or (nested_scheme and nested_scheme.get("has_jobs"))
+        scheme_id = s.get("id")
+        if scheme_id is None and nested_scheme:
+            scheme_id = nested_scheme.get("id")
+        if has_jobs and scheme_id is not None:
+            scheme_ids_with_jobs.append(scheme_id)
     # All scheme IDs in the output (for tagging)
     all_scheme_ids = set()
     for s in scheme_out:
