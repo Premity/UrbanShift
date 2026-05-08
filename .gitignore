@@ -1,0 +1,70 @@
+# ── Python ────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# uv
+.venv/
+uv.lock
+
+# ── Node / Frontend ──────────────────────────────
+node_modules/
+dist/
+.cache/
+*.tsbuildinfo
+
+# pnpm
+.pnpm-store/
+
+# Vite
+apps/web/dist/
+
+# ── Environment ──────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# Keep templates
+!.env.development
+!.env.demo
+
+# ── Docker ───────────────────────────────────────
+docker-compose.override.yml
+
+# ── Database ─────────────────────────────────────
+*.sql.bak
+pgdata/
+
+# ── IDE / Editor ─────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ── Logging / Traces ────────────────────────────
+*.log
+logs/
+
+# ── Testing ──────────────────────────────────────
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+
+# ── Misc ─────────────────────────────────────────
+*.zip
+*.tar.gz
+*.bak
+tmp/
+scratch/
+
+docs/
