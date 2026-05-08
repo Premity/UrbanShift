@@ -193,10 +193,18 @@ def _validate_housing(housing: dict, profile: dict) -> list[str]:
     # R-H3 budget cap
     budget = profile.get("budget")
     price_min = housing.get("price_min")
-    if budget and price_min is not None:
-        cap = int(budget * 1.05)
-        if price_min > cap:
-            reasons.append(f"price_min {price_min} exceeds budget cap {cap}")
+    if budget is not None and price_min is not None:
+        try:
+            budget_value = float(budget)
+            price_min_value = float(price_min)
+        except (TypeError, ValueError):
+            budget_value = None
+            price_min_value = None
+
+        if budget_value is not None and price_min_value is not None:
+            cap = int(budget_value * 1.05)
+            if price_min_value > cap:
+                reasons.append(f"price_min {price_min} exceeds budget cap {cap}")
 
     return reasons
 
