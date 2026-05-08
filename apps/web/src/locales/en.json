@@ -1,0 +1,20 @@
+{
+  "header": {
+    "title": "UrbanShift"
+  },
+  "landing": {
+    "title": "UrbanShift",
+    "subtitle": "AI-powered urban migrant assistance platform",
+    "getStarted": "Get Started",
+    "seekerType": {
+      "job": "Jobs",
+      "housing": "Housing",
+      "both": "Both"
+    }
+  },
+  "language": {
+    "en": "English",
+    "hi": "हिंदी",
+    "kn": "ಕನ್ನಡ"
+  }
+}
