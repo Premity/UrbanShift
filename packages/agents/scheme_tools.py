@@ -135,7 +135,7 @@ def search_schemes_semantic(
         Sorted list of (scheme_dict, score) limited to top_k.
     """
     # Check if we can do vector search
-    has_embeddings = any(s.get("embedding") for s in all_schemes)
+    has_embeddings = any(s.get("embedding") is not None for s in all_schemes)
 
     if has_embeddings and embedder is not None:
         profile_text = _build_profile_text(profile)
