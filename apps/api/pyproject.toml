@@ -12,6 +12,13 @@ dependencies = [
     "pgvector>=0.3.0",
     "pydantic>=2.0.0",
     "python-dotenv>=1.0.0",
+    "playwright>=1.40.0",
+    "apscheduler>=3.10.0",
+    "sentence-transformers>=2.2.0",
+    "litellm>=1.0.0",
+    "langgraph>=0.0.10",
+    "structlog>=24.0.0",
+    "langsmith>=0.1.0",
 ]
 
 [build-system]
