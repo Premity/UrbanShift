@@ -1,0 +1,76 @@
+# ── UrbanShift — Full Stack Dev Environment ──────────────
+# Services: postgres (pgvector) + adminer + api (FastAPI) + web (Vite React)
+# Usage: docker compose up --build  |  make dev
+
+services:
+  # ── Database ────────────────────────────────────────────
+  db:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-urbanshift}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-urbanshift_dev}
+      POSTGRES_DB: ${POSTGRES_DB:-urbanshift}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-urbanshift}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ── Database Admin UI ──────────────────────────────────
+  adminer:
+    image: adminer:latest
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ── FastAPI Backend ────────────────────────────────────
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./apps/api:/app
+      - ./packages:/packages
+      - ./scripts:/scripts
+      - ./data:/data
+    environment:
+      - DATABASE_URL=${DATABASE_URL:-postgresql+asyncpg://urbanshift:urbanshift_dev@db:5432/urbanshift}
+      - LLM_PROFILE=${LLM_PROFILE:-dev}
+      - GROQ_API_KEY=${GROQ_API_KEY:-}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
+      - ADZUNA_APP_ID=${ADZUNA_APP_ID:-}
+      - ADZUNA_APP_KEY=${ADZUNA_APP_KEY:-}
+      - LANGCHAIN_TRACING_V2=${LANGCHAIN_TRACING_V2:-false}
+      - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY:-}
+      - LANGCHAIN_PROJECT=${LANGCHAIN_PROJECT:-urbanshift-dev}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ── Vite React Frontend ────────────────────────────────
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
+    depends_on:
+      - api
+
+volumes:
+  pgdata:
