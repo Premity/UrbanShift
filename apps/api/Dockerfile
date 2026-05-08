@@ -1,5 +1,5 @@
 # ── UrbanShift API ── Python 3.11 + uv ──────────────────
-FROM python:3.11-slim AS base
+FROM python:3.11-slim
 
 # System deps for asyncpg and pgvector
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -15,17 +15,11 @@ WORKDIR /app
 # Copy dependency manifest first (cache layer)
 COPY pyproject.toml .
 
-# Install dependencies via uv
-RUN uv venv /app/.venv && \
-    . /app/.venv/bin/activate && \
-    uv pip install -e .
+# Install dependencies into system Python (no venv needed in Docker)
+RUN uv pip install --system -r pyproject.toml
 
 # Copy application source
 COPY . .
-
-# Ensure venv is on PATH
-ENV PATH="/app/.venv/bin:$PATH"
-ENV VIRTUAL_ENV="/app/.venv"
 
 EXPOSE 8000
 
