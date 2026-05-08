@@ -130,7 +130,7 @@ docker compose exec api alembic downgrade -1
 
 ```bash
 make seed
-# Runs: docker compose exec api python -m scripts.seed_db
+# Runs: docker compose exec -e PYTHONPATH=/:/app api python -m scripts.seed_db
 ```
 
 ---
@@ -139,7 +139,7 @@ make seed
 
 ```bash
 make refresh-jobs
-# Runs: docker compose exec api python -m scripts.refresh_jobs
+# Runs: docker compose exec -e PYTHONPATH=/:/app api python -m scripts.refresh_jobs
 ```
 
 ---
