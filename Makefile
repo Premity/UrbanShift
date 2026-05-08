@@ -14,8 +14,8 @@ migrate:
 	docker compose exec api alembic upgrade head
 
 seed:
-	docker compose exec api python -m scripts.seed_db
+	docker compose exec -e PYTHONPATH=/:/app api python -m scripts.seed_db
 
 refresh-jobs:
-	docker compose exec api python -m scripts.refresh_jobs
+	docker compose exec -e PYTHONPATH=/:/app api python -m scripts.refresh_jobs
 
