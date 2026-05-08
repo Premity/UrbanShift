@@ -7,10 +7,8 @@ services:
   db:
     image: pgvector/pgvector:pg16
     restart: unless-stopped
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER:-urbanshift}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-urbanshift_dev}
-      POSTGRES_DB: ${POSTGRES_DB:-urbanshift}
+    env_file:
+      - .env.development
     ports:
       - "5432:5432"
     volumes:
@@ -44,16 +42,8 @@ services:
       - ./packages:/packages
       - ./scripts:/scripts
       - ./data:/data
-    environment:
-      - DATABASE_URL=${DATABASE_URL:-postgresql+asyncpg://urbanshift:urbanshift_dev@db:5432/urbanshift}
-      - LLM_PROFILE=${LLM_PROFILE:-dev}
-      - GROQ_API_KEY=${GROQ_API_KEY:-}
-      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
-      - ADZUNA_APP_ID=${ADZUNA_APP_ID:-}
-      - ADZUNA_APP_KEY=${ADZUNA_APP_KEY:-}
-      - LANGCHAIN_TRACING_V2=${LANGCHAIN_TRACING_V2:-false}
-      - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY:-}
-      - LANGCHAIN_PROJECT=${LANGCHAIN_PROJECT:-urbanshift-dev}
+    env_file:
+      - .env.development
     depends_on:
       db:
         condition: service_healthy

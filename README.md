@@ -51,7 +51,7 @@ UrbanShift/
 │   └── web/          # Vite React TS frontend
 ├── packages/
 │   ├── agents/       # LangGraph nodes, prompts, tools
-│   ├── scrapers/     # Playwright + Adzuna scrapers
+│   ├── scrapers/     # Playwright scrapers
 │   └── shared/       # Cross-cutting Pydantic types
 ├── data/seed/        # Seed data (schemes, housing)
 ├── scripts/          # Utility scripts
