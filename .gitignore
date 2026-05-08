@@ -29,10 +29,8 @@ apps/web/dist/
 .env
 .env.local
 .env.*.local
-
-# Keep templates
-!.env.development
-!.env.demo
+.env.development
+.env.demo
 
 # ── Docker ───────────────────────────────────────
 docker-compose.override.yml
