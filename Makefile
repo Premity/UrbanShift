@@ -19,3 +19,6 @@ seed:
 refresh-jobs:
 	docker compose exec -e PYTHONPATH=/:/app api python -m scripts.refresh_jobs
 
+seed-jobs:
+	docker compose exec -e PYTHONPATH=/:/app api python -m scripts.seed_jobs_new
+

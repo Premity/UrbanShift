@@ -8,7 +8,7 @@ Intelligent orchestration across **Government Schemes**, **Jobs**, and **Housing
 
 | Layer | Choice |
 |---|---|
-| Frontend | React 18 + TypeScript + Vite + Tailwind + shadcn/ui |
+| Frontend | React 18 + TypeScript + Vite + Tailwind |
 | Backend | Python 3.11 + FastAPI + Pydantic v2 |
 | Database | Postgres 16 + pgvector |
 | Agents | LangGraph + LiteLLM |

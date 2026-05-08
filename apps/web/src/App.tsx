@@ -6,6 +6,7 @@ import { Briefcase, Home, Sparkles, ArrowRight, MapPin, Users, ShieldCheck } fro
 import IntakePage from "./pages/intake";
 import ConfirmPage from "./pages/confirm";
 import ProcessingPage from "./pages/processing";
+import ResultsPage from "./pages/results";
 
 const SEEKER_PILLS = [
   { key: "job", Icon: Briefcase },
@@ -207,9 +208,9 @@ export default function App() {
         <Route path="/intake" element={<IntakePage />} />
         <Route path="/intake/confirm" element={<ConfirmPage />} />
         <Route path="/processing" element={<ProcessingPage />} />
-        {/* /results implemented by T17 — stub prevents 404 */}
-        <Route path="/results" element={<div className="min-h-dvh flex items-center justify-center text-muted-foreground text-sm">Results coming soon (T17)</div>} />
+        <Route path="/results" element={<ResultsPage />} />
       </Routes>
     </BrowserRouter>
   );
 }
+
