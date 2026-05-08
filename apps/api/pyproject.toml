@@ -16,7 +16,7 @@ dependencies = [
     "apscheduler>=3.10.0",
     "sentence-transformers>=2.2.0",
     "litellm>=1.0.0",
-    "langgraph>=0.0.10",
+    "langgraph>=1.1.0",
     "structlog>=24.0.0",
     "langsmith>=0.1.0",
 ]
