@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Briefcase, Home, Sparkles, ArrowRight, MapPin, Users, ShieldCheck } from "lucide-react";
 import IntakePage from "./pages/intake";
 import ConfirmPage from "./pages/confirm";
+import ProcessingPage from "./pages/processing";
 
 const SEEKER_PILLS = [
   { key: "job", Icon: Briefcase },
@@ -86,8 +87,9 @@ function SunArc({ reduced }: { reduced: boolean | null }) {
         cx="400" cy="580" r="8"
         fill="hsl(24.6 95% 53.1%)"
         fillOpacity="0.4"
-        animate={reduced ? {} : { r: [8, 14, 8], fillOpacity: [0.4, 0.15, 0.4] }}
+        animate={reduced ? {} : { scale: [1, 1.75, 1], fillOpacity: [0.4, 0.15, 0.4] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "400px 580px" }}
       />
     </svg>
   );
@@ -204,6 +206,9 @@ export default function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/intake" element={<IntakePage />} />
         <Route path="/intake/confirm" element={<ConfirmPage />} />
+        <Route path="/processing" element={<ProcessingPage />} />
+        {/* /results implemented by T17 — stub prevents 404 */}
+        <Route path="/results" element={<div className="min-h-dvh flex items-center justify-center text-muted-foreground text-sm">Results coming soon (T17)</div>} />
       </Routes>
     </BrowserRouter>
   );

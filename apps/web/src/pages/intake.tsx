@@ -24,7 +24,14 @@ const COMBINED_FIELDS: Record<string, string[]> = {
 interface Message {
   id: number;
   role: "agent" | "user";
-  text: string;
+  // Agent messages carry one of:
+  i18nKey?: string;                          // static key e.g. "intake.seekerType.label"
+  promptI18n?: Record<string, string>;       // turn prompt map from backend
+  // User messages carry:
+  rawValue?: unknown;                        // original answer value
+  field?: string;                            // primary field name
+  // Fallback for anything that doesn't fit above:
+  text?: string;
 }
 
 interface SeekerSelectProps {
@@ -81,10 +88,19 @@ export default function IntakePage() {
   const [turnIndex, setTurnIndex] = useState(0);
   const totalTurns = seekerType === "job" ? 7 : 8;
 
-  function addMessage(role: "agent" | "user", text: string) {
+  function addAgentKey(i18nKey: string) {
     msgCounter.current += 1;
-    const id = msgCounter.current;
-    setMessages((prev) => [...prev, { id, role, text }]);
+    setMessages((prev) => [...prev, { id: msgCounter.current, role: "agent", i18nKey }]);
+  }
+
+  function addAgentTurn(promptI18n: Record<string, string>) {
+    msgCounter.current += 1;
+    setMessages((prev) => [...prev, { id: msgCounter.current, role: "agent", promptI18n }]);
+  }
+
+  function addUserMessage(rawValue: unknown, field: string) {
+    msgCounter.current += 1;
+    setMessages((prev) => [...prev, { id: msgCounter.current, role: "user", rawValue, field }]);
   }
 
   useEffect(() => {
@@ -95,7 +111,7 @@ export default function IntakePage() {
 
   useEffect(() => {
     if (sessionReady && !seekerType) {
-      addMessage("agent", t("intake.seekerType.label"));
+      addAgentKey("intake.seekerType.label");
     }
   }, [sessionReady]);
 
@@ -105,7 +121,7 @@ export default function IntakePage() {
 
   async function handleSeekerSelect(type: "job" | "housing" | "both") {
     setSeekerType(type);
-    addMessage("user", t(`intake.seekerType.${type}`));
+    addUserMessage(type, "seeker_type");
     setLoading(true);
     try {
       const res = await sendTurn({ field: "seeker_type", value: type });
@@ -123,9 +139,7 @@ export default function IntakePage() {
       return;
     }
     if (res.turn) {
-      const lang = i18n.language as keyof typeof res.turn.prompt_i18n;
-      const prompt = res.turn.prompt_i18n[lang] ?? res.turn.prompt_i18n.en;
-      addMessage("agent", prompt);
+      addAgentTurn(res.turn.prompt_i18n);
       setCurrentTurn(res.turn);
       setTurnIndex((i) => i + 1);
     }
@@ -139,25 +153,22 @@ export default function IntakePage() {
     let answerValue: unknown;
 
     if (fields && fields.length > 1) {
-      // For combined turns the value from TurnInputRenderer is the primary field's value.
-      // We wrap it in an object; secondary fields default to empty / the same value.
-      const dict: Record<string, unknown> = {};
-      dict[fields[0]] = value;
-      // Secondary fields: for multi/chips with free text they come through as the same value;
-      // the backend is lenient — empty arrays/nulls are fine for optional secondary fields.
-      for (let i = 1; i < fields.length; i++) {
-        dict[fields[i]] = Array.isArray(value) ? value : null;
+      if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+        answerValue = value;
+      } else {
+        const dict: Record<string, unknown> = {};
+        dict[fields[0]] = value;
+        for (let i = 1; i < fields.length; i++) {
+          dict[fields[i]] = Array.isArray(value) ? value : null;
+        }
+        answerValue = dict;
       }
-      answerValue = dict;
     } else {
       answerValue = value;
     }
 
-    // Show user's answer as a readable string
-    const displayText = Array.isArray(value)
-      ? (value as string[]).join(", ")
-      : String(value);
-    addMessage("user", displayText);
+    addUserMessage(value, currentTurn.field);
+
 
     setCurrentTurn(null);
     setLoading(true);
@@ -180,7 +191,7 @@ export default function IntakePage() {
       {/* Progress bar */}
       {seekerType && (
         <div
-          className="h-1 bg-muted"
+          className="h-1 bg-muted sticky top-14 z-40"
           role="progressbar"
           aria-valuenow={progressPct}
           aria-valuemin={0}
@@ -198,9 +209,39 @@ export default function IntakePage() {
 
       {/* Chat area */}
       <main className="flex-1 flex flex-col max-w-[600px] w-full mx-auto px-4 py-6 gap-3">
-        {messages.map((msg) => (
-          <ChatTurn key={msg.id} role={msg.role} text={msg.text} />
-        ))}
+        {messages.map((msg) => {
+          // Resolve display text reactively from current language
+          let text = msg.text ?? "";
+          if (msg.i18nKey) {
+            text = t(msg.i18nKey);
+          } else if (msg.promptI18n) {
+            const lang = i18n.language as keyof typeof msg.promptI18n;
+            text = msg.promptI18n[lang] ?? msg.promptI18n.en ?? "";
+          } else if (msg.role === "user" && msg.rawValue !== undefined && msg.field) {
+            const value = msg.rawValue;
+            if (msg.field === "seeker_type") {
+              text = t(`intake.seekerType.${String(value)}`, String(value));
+            } else if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+              const parts = Object.entries(value as Record<string, unknown>)
+                .filter(([_, v]) => v !== null && v !== "" && !(Array.isArray(v) && (v as unknown[]).length === 0))
+                .map(([k, v]) => {
+                  if (Array.isArray(v) && v.length === 2 && typeof v[0] === "number")
+                    return `${t(`confirm.${k}`, k)}: ₹${(v[0] as number).toLocaleString()} – ₹${(v[1] as number).toLocaleString()}`;
+                  if (typeof v === "number")
+                    return `${t(`confirm.${k}`, k)}: ₹${v.toLocaleString()}`;
+                  if (Array.isArray(v))
+                    return `${t(`confirm.${k}`, k)}: ${(v as string[]).map(x => t(`intake.options.${x}`, x)).join(", ")}`;
+                  return `${t(`confirm.${k}`, k)}: ${t(`intake.options.${String(v)}`, String(v))}`;
+                });
+              text = parts.join(" | ");
+            } else {
+              text = Array.isArray(value)
+                ? (value as string[]).map(x => t(`intake.options.${x}`, x)).join(", ")
+                : t(`intake.options.${String(value)}`, String(value));
+            }
+          }
+          return <ChatTurn key={msg.id} role={msg.role} text={text} />;
+        })}
 
         {loading && (
           <motion.div

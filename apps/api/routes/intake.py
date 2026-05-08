@@ -84,18 +84,21 @@ async def intake_turn(
 
     # ── Process the incoming answer ──────────────────────
     if body.answer is not None:
-        try:
-            profile_data = apply_answer(
-                profile_data,
-                body.answer.field,
-                body.answer.value,
-                current_step,
-            )
-        except ValueError as e:
-            raise HTTPException(status_code=400, detail=str(e))
+        if body.answer.field == "seeker_type":
+            profile_data["seeker_type"] = body.answer.value
+        else:
+            try:
+                profile_data = apply_answer(
+                    profile_data,
+                    body.answer.field,
+                    body.answer.value,
+                    current_step,
+                )
+            except ValueError as e:
+                raise HTTPException(status_code=400, detail=str(e))
 
-        current_step += 1
-        profile_data["_intake_step"] = current_step
+            current_step += 1
+            profile_data["_intake_step"] = current_step
 
     # ── Determine the next turn ──────────────────────────
     next_turn, new_step = get_next_turn(profile_data, current_step)
