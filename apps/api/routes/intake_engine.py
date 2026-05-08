@@ -259,7 +259,7 @@ def apply_answer(
     # The answer_value can be a dict with multiple fields or a single value
     if isinstance(answer_value, dict):
         for field in fields:
-            if field in answer_value:
+            if field in answer_value and answer_value[field] is not None:
                 profile[field] = _normalize_value(field, answer_value[field])
     else:
         # Single value — apply to the primary field
