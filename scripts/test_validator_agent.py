@@ -27,7 +27,7 @@ PROFILE = {
     "gender": "male",
     "worker_band": 2,
     "sector": "construction",
-    "budget": 6000,
+    "budget_inr": 6000,
     "aadhaar_available": True,
     "migrant_status": "migrant",
 }
