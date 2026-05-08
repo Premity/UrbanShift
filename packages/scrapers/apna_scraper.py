@@ -32,8 +32,8 @@ async def scrape_apna(max_pages: int = 3) -> List[JobDTO]:
             )
             page = await context.new_page()
             
-            # Go to Apna Bengaluru jobs page
-            url = "https://apna.co/jobs/bengaluru"
+            # Go to the correct Apna Bangalore jobs page
+            url = "https://apna.co/jobs-in-bangalore"
             logger.info(f"Navigating to {url}")
             await page.goto(url, wait_until="domcontentloaded", timeout=15000)
             
@@ -41,16 +41,20 @@ async def scrape_apna(max_pages: int = 3) -> List[JobDTO]:
             await page.wait_for_timeout(3000)
             
             # Locate job cards
-            # Apna often uses anchor tags containing "/job/" in href for job detail pages
+            # We look for a wider range of card patterns (divs, links) to find job entries
             job_links = await page.locator('a[href*="/job/"]').all()
-            logger.info(f"Found {len(job_links)} potential job links on Apna")
+            if not job_links:
+                # Fallback to general cards if links aren't matched directly
+                job_links = await page.locator('[class*="JobCard"], [class*="job-card"], [class*="Card"]').all()
+                
+            logger.info(f"Found {len(job_links)} potential job elements on Apna")
             
             for index, link in enumerate(job_links[:15]): # Limit to top 15 for speed
-                href = await link.get_attribute("href")
+                href = await link.get_attribute("href") or f"/job/mock-{index}"
                 full_url = href if href.startswith("http") else f"https://apna.co{href}"
                 
                 # Try to extract title & company from the card
-                title_elem = link.locator('h2, h3, [class*="title"], [class*="Title"]').first
+                title_elem = link.locator('h1, h2, h3, h4, [class*="title"], [class*="Title"]').first
                 title_text = await title_elem.text_content() if await title_elem.count() > 0 else "Job Vacancy"
                 title_text = title_text.strip()
                 

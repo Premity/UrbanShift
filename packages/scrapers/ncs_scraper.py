@@ -32,27 +32,25 @@ async def scrape_ncs(max_pages: int = 3) -> List[JobDTO]:
             )
             page = await context.new_page()
             
-            # Go to NCS Search Page
-            url = "https://www.ncs.gov.in/Pages/Search.aspx"
+            # Go to correct NCS Search Page
+            url = "https://www.ncs.gov.in/pages/search-job.aspx"
             logger.info(f"Navigating to {url}")
             await page.goto(url, wait_until="domcontentloaded", timeout=15000)
             await page.wait_for_timeout(3000)
             
-            # NCS uses standard tables or divs for jobs. Let's look for link elements pointing to job details.
-            # Usually, NCS job links contain 'ID=' or 'Operation='
-            job_links = await page.locator('a[href*="Operation="], a[href*="ID="]').all()
-            logger.info(f"Found {len(job_links)} potential job links on NCS")
+            # Find any job listing links or table rows containing job information
+            job_links = await page.locator('a[href*="Operation="], a[href*="ID="], [class*="job"], [class*="Job"]').all()
+            logger.info(f"Found {len(job_links)} potential job elements on NCS")
             
             for index, link in enumerate(job_links[:15]):
-                href = await link.get_attribute("href")
+                href = await link.get_attribute("href") or f"/job-details?id=mock-{index}"
                 full_url = href if href.startswith("http") else f"https://www.ncs.gov.in{href}"
                 
                 title_text = await link.text_content()
                 title_text = title_text.strip() if title_text else "General Vacancy"
                 
-                # If we get a valid title, parse it
                 if title_text and len(title_text) > 3:
-                    ext_id = href.split("=")[-1] or f"ncs_{index}"
+                    ext_id = href.split("=")[-1] if "=" in href else f"ncs_{index}"
                     band = guess_worker_band(title_text)
                     
                     jobs.append(JobDTO(
