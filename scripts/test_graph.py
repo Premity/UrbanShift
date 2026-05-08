@@ -24,8 +24,17 @@ _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _API_DIR = os.path.join(_ROOT, "apps", "api")
 _PACKAGES_DIR = os.path.join(_ROOT, "packages")
 
-for p in [_API_DIR, _PACKAGES_DIR, _ROOT]:
-    if p not in sys.path:
+_PATH_CANDIDATES = [
+    os.environ.get("API_DIR"),
+    os.environ.get("PACKAGES_DIR"),
+    _API_DIR,
+    _PACKAGES_DIR,
+    "/app",
+    "/packages",
+    _ROOT,
+]
+for p in dict.fromkeys(_PATH_CANDIDATES):
+    if p and os.path.isdir(p) and p not in sys.path:
         sys.path.insert(0, p)
 
 logging.basicConfig(

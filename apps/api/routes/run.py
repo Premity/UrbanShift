@@ -72,12 +72,7 @@ async def run_graph(
     }
 
     # Build graph
-    import sys
-    packages_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "..", "packages"))
-    if packages_dir not in sys.path:
-        sys.path.insert(0, packages_dir)
-
-    from agents.graph import build_graph
+    from packages.agents.graph import build_graph
 
     graph = build_graph()
 
@@ -97,7 +92,11 @@ async def run_graph(
                         continue
 
                     # Merge node output into running final state
-                    final_output.update(node_output)
+                    for key, val in node_output.items():
+                        if key in ("agent_steps", "errors") and isinstance(val, list):
+                            final_output.setdefault(key, []).extend(val)
+                        else:
+                            final_output[key] = val
 
                     # Emit any new agent_steps from this node
                     for step in node_output.get("agent_steps", []):
@@ -122,7 +121,7 @@ async def run_graph(
                             "steps": final_output.get("agent_steps", []),
                             "errors": final_output.get("errors", []),
                         },
-                        filtered_out_json=plan.get("filtered_out"),
+                        filtered_out_json={"items": plan.get("filtered_out")} if plan.get("filtered_out") is not None else None,
                         llm_profile=os.getenv("LLM_PROFILE", "dev"),
                     )
                     plan_db.add(plan_row)

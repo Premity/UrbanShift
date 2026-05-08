@@ -24,9 +24,12 @@ from langgraph.graph import END, START, StateGraph
 logger = logging.getLogger(__name__)
 
 # ── Ensure apps/api is on sys.path so model imports work ────────────────────
-_API_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "..", "apps", "api"))
-if _API_DIR not in sys.path:
+_API_DIR = os.environ.get("API_DIR", "/app")
+if os.path.isdir(_API_DIR) and _API_DIR not in sys.path:
     sys.path.insert(0, _API_DIR)
+_LOCAL_API_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "..", "apps", "api"))
+if os.path.isdir(_LOCAL_API_DIR) and _LOCAL_API_DIR not in sys.path:
+    sys.path.insert(0, _LOCAL_API_DIR)
 
 
 # ── Shared Graph State ──────────────────────────────────────────────────────
@@ -93,6 +96,7 @@ async def _scheme_node(state: AgentState) -> dict[str, Any]:
             "category": row.category or [],
             "has_jobs": row.has_jobs,
             "eligibility_json": row.eligibility_json or {},
+            "eligibility": row.eligibility_json or {},
             "docs_required": row.docs_required or [],
             "benefits_summary": row.benefits_summary or "",
             "benefits_detail_md": row.benefits_detail_md or "",
@@ -145,13 +149,23 @@ async def _housing_node(state: AgentState) -> dict[str, Any]:
     result = await housing_agent_node(state)
     housing_out = result.get("housing_out", [])
 
-    return {
+    existing_errors = state.get("errors", [])
+    result_errors = result.get("errors", [])
+    if len(result_errors) >= len(existing_errors):
+        new_errors = result_errors[len(existing_errors):]
+    else:
+        new_errors = result_errors
+
+    node_result: dict[str, Any] = {
         "housing_out": housing_out,
         "agent_steps": [_step_event(
             "housing", "complete",
             items_count=len(housing_out),
         )],
     }
+    if new_errors:
+        node_result["errors"] = new_errors
+    return node_result
 
 
 async def _validator_node(state: AgentState) -> dict[str, Any]:
@@ -169,7 +183,14 @@ async def _validator_node(state: AgentState) -> dict[str, Any]:
         + len(validated.get("housing", []))
     )
 
-    return {
+    existing_errors = state.get("errors", [])
+    result_errors = result.get("errors", [])
+    if len(result_errors) >= len(existing_errors):
+        new_errors = result_errors[len(existing_errors):]
+    else:
+        new_errors = result_errors
+
+    node_result: dict[str, Any] = {
         "validator_out": validator_out,
         "agent_steps": [_step_event(
             "validator", "complete",
@@ -177,6 +198,9 @@ async def _validator_node(state: AgentState) -> dict[str, Any]:
             filtered=len(filtered_out),
         )],
     }
+    if new_errors:
+        node_result["errors"] = new_errors
+    return node_result
 
 
 async def _orchestrator_merge(state: AgentState) -> dict[str, Any]:
