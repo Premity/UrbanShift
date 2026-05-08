@@ -42,51 +42,79 @@ export default function ProcessingPage() {
   });
 
   useEffect(() => {
-    const es = new EventSource(`${API_BASE}/api/run`, {
-      // credentials need to be set differently for EventSource; we pass session via cookie
-    });
+    const abortController = new AbortController();
 
     function markStep(agent: AgentKey, status: StepStatus) {
       setStepStatuses((prev) => ({ ...prev, [agent]: status }));
     }
 
-    es.onmessage = (ev) => {
+    async function streamGraph() {
       try {
-        const data = JSON.parse(ev.data);
-        if (data.type === "agent_step") {
-          markStep(data.agent as AgentKey, data.status === "running" ? "running" : "complete");
+        const response = await fetch(`${API_BASE}/api/run`, {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({}),
+          signal: abortController.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-        if (data.type === "plan") {
-          es.close();
-          navigate("/results", { state: { plan: data.plan, profile } });
+
+        const reader = response.body?.getReader();
+        const decoder = new TextDecoder("utf-8");
+
+        if (!reader) {
+          throw new Error("No response body reader");
         }
-        if (data.type === "done") {
-          es.close();
+
+        let buffer = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          
+          // Process SSE lines
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || ""; // Keep the last incomplete line in buffer
+
+          for (const line of lines) {
+            if (line.startsWith("data: ")) {
+              const dataStr = line.substring(6).trim();
+              if (!dataStr) continue;
+              
+              try {
+                const data = JSON.parse(dataStr);
+                if (data.type === "agent_step") {
+                  markStep(data.agent as AgentKey, data.status === "running" ? "running" : "complete");
+                }
+                if (data.type === "plan") {
+                  navigate("/results", { state: { plan: data.plan, profile } });
+                  return; // Stop reading on success
+                }
+                if (data.type === "done") {
+                  return; // Stop reading
+                }
+              } catch (e) {
+                // Ignore parsing errors for partial/invalid chunks
+              }
+            }
+          }
         }
-      } catch {
-        // non-JSON message — ignore
+      } catch (err: any) {
+        if (err.name === 'AbortError') return;
+        setError(t("processing.error", "Something went wrong. Please try again."));
       }
+    }
+
+    streamGraph();
+
+    return () => {
+      abortController.abort();
     };
-
-    es.onerror = () => {
-      es.close();
-      setError(t("processing.error", "Something went wrong. Please try again."));
-    };
-
-    // POST /api/run to kick off the graph (EventSource is GET-only; backend fires SSE on this endpoint)
-    // Per PRD §7.1, /api/run accepts POST and returns SSE stream.
-    // We trigger it as a POST separately, then SSE picks up progress.
-    fetch(`${API_BASE}/api/run`, {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({}),
-    }).catch(() => {
-      es.close();
-      setError(t("processing.error", "Failed to start processing."));
-    });
-
-    return () => es.close();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
