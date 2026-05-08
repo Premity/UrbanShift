@@ -72,18 +72,28 @@ async def intake_turn(
     advances the step counter, and returns the next question.  When
     the sequence is complete, ``complete=true`` is returned.
     """
+    if body.session_id is not None and body.session_id != session.id:
+        raise HTTPException(
+            status_code=400,
+            detail="Session ID in request body does not match the authenticated session."
+        )
+
     profile_row = await _get_or_create_profile(session, db)
     profile_data: dict = dict(profile_row.profile_json)  # mutable copy
     current_step: int = profile_data.get("_intake_step", 0)
 
     # ── Process the incoming answer ──────────────────────
     if body.answer is not None:
-        profile_data = apply_answer(
-            profile_data,
-            body.answer.field,
-            body.answer.value,
-            current_step,
-        )
+        try:
+            profile_data = apply_answer(
+                profile_data,
+                body.answer.field,
+                body.answer.value,
+                current_step,
+            )
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e))
+
         current_step += 1
         profile_data["_intake_step"] = current_step
 
@@ -153,8 +163,8 @@ async def intake_finalize(
         profile_schema = ProfileSchema(**clean)
     except Exception as e:
         logger.warning("Profile validation failed: %s", e)
-        # Return what we have even if partially invalid
-        profile_schema = ProfileSchema(
+        # Bypasses validation to return whatever we managed to collect safely
+        profile_schema = ProfileSchema.model_construct(
             seeker_type=seeker_type,
             **{k: v for k, v in clean.items() if k != "seeker_type"},
         )

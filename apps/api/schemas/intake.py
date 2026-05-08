@@ -18,7 +18,7 @@ class IntakeAnswer(BaseModel):
 
 class IntakeTurnRequest(BaseModel):
     """Request body for POST /api/intake/turn."""
-    session_id: uuid.UUID
+    session_id: Optional[uuid.UUID] = None
     answer: Optional[IntakeAnswer] = None  # None for the very first turn
 
 

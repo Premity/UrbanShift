@@ -1,5 +1,5 @@
 """Extended tests: job-only path + Priya persona (band 4)."""
-import requests, json, sys
+import requests
 
 BASE = "http://localhost:8000"
 
@@ -55,42 +55,43 @@ def run_intake(persona_name, seeker_type, answers, expected_band):
     return actual_band == expected_band
 
 
-# ── Test 1: Ravi (band 2, seeker_type=both) ──────────────
-ok1 = run_intake("Ravi (both)", "both", [
-    {"field": "native_lang", "value": {"native_lang": "hi", "languages_spoken": ["hi", "en"]}},
-    {"field": "origin_state", "value": {"origin_state": "BR", "migrant_status": "just_moved"}},
-    {"field": "age", "value": {"age": 28, "gender": "male"}},
-    {"field": "sector", "value": {"sector": "driving", "skills": ["driving", "basic mechanical"]}},
-    {"field": "education", "value": {"education": "class10", "years_experience": 5}},
-    {"field": "employment_status", "value": {"employment_status": "unemployed", "income_range_inr": [0, 0]}},
-    {"field": "budget_inr", "value": {"budget_inr": 6000, "preferred_areas": ["Whitefield"], "occupancy_pref": "shared"}},
-    {"field": "aadhaar_available", "value": "yes"},
-], expected_band=2)
+if __name__ == "__main__":
+    # ── Test 1: Ravi (band 2, seeker_type=both) ──────────────
+    ok1 = run_intake("Ravi (both)", "both", [
+        {"field": "native_lang", "value": {"native_lang": "hi", "languages_spoken": ["hi", "en"]}},
+        {"field": "origin_state", "value": {"origin_state": "BR", "migrant_status": "just_moved"}},
+        {"field": "age", "value": {"age": 28, "gender": "male"}},
+        {"field": "sector", "value": {"sector": "driving", "skills": ["driving", "basic mechanical"]}},
+        {"field": "education", "value": {"education": "class10", "years_experience": 5}},
+        {"field": "employment_status", "value": {"employment_status": "unemployed", "income_range_inr": [0, 0]}},
+        {"field": "budget_inr", "value": {"budget_inr": 6000, "preferred_areas": ["Whitefield"], "occupancy_pref": "shared"}},
+        {"field": "aadhaar_available", "value": "yes"},
+    ], expected_band=2)
 
-# ── Test 2: Ravi (band 2, seeker_type=job — skip housing) ─
-ok2 = run_intake("Ravi (job-only)", "job", [
-    {"field": "native_lang", "value": {"native_lang": "hi", "languages_spoken": ["hi"]}},
-    {"field": "origin_state", "value": {"origin_state": "BR", "migrant_status": "just_moved"}},
-    {"field": "age", "value": {"age": 28, "gender": "male"}},
-    {"field": "sector", "value": {"sector": "driving", "skills": ["driving"]}},
-    {"field": "education", "value": {"education": "class10", "years_experience": 5}},
-    {"field": "employment_status", "value": {"employment_status": "unemployed", "income_range_inr": [0, 0]}},
-    {"field": "aadhaar_available", "value": "yes"},
-], expected_band=2)
+    # ── Test 2: Ravi (band 2, seeker_type=job — skip housing) ─
+    ok2 = run_intake("Ravi (job-only)", "job", [
+        {"field": "native_lang", "value": {"native_lang": "hi", "languages_spoken": ["hi"]}},
+        {"field": "origin_state", "value": {"origin_state": "BR", "migrant_status": "just_moved"}},
+        {"field": "age", "value": {"age": 28, "gender": "male"}},
+        {"field": "sector", "value": {"sector": "driving", "skills": ["driving"]}},
+        {"field": "education", "value": {"education": "class10", "years_experience": 5}},
+        {"field": "employment_status", "value": {"employment_status": "unemployed", "income_range_inr": [0, 0]}},
+        {"field": "aadhaar_available", "value": "yes"},
+    ], expected_band=2)
 
-# ── Test 3: Priya (band 4, seeker_type=both) ─────────────
-ok3 = run_intake("Priya (both)", "both", [
-    {"field": "native_lang", "value": {"native_lang": "te", "languages_spoken": ["te", "en", "hi"]}},
-    {"field": "origin_state", "value": {"origin_state": "TS", "migrant_status": "planning"}},
-    {"field": "age", "value": {"age": 23, "gender": "female"}},
-    {"field": "sector", "value": {"sector": "bpo", "skills": ["customer support", "Excel", "typing"]}},
-    {"field": "education", "value": {"education": "grad", "years_experience": 0}},
-    {"field": "employment_status", "value": {"employment_status": "unemployed", "income_range_inr": [0, 0]}},
-    {"field": "budget_inr", "value": {"budget_inr": 12000, "preferred_areas": ["Koramangala", "HSR Layout"], "occupancy_pref": "single"}},
-    {"field": "aadhaar_available", "value": "yes"},
-], expected_band=4)
+    # ── Test 3: Priya (band 4, seeker_type=both) ─────────────
+    ok3 = run_intake("Priya (both)", "both", [
+        {"field": "native_lang", "value": {"native_lang": "te", "languages_spoken": ["te", "en", "hi"]}},
+        {"field": "origin_state", "value": {"origin_state": "TS", "migrant_status": "planning"}},
+        {"field": "age", "value": {"age": 23, "gender": "female"}},
+        {"field": "sector", "value": {"sector": "bpo", "skills": ["customer support", "Excel", "typing"]}},
+        {"field": "education", "value": {"education": "grad", "years_experience": 0}},
+        {"field": "employment_status", "value": {"employment_status": "unemployed", "income_range_inr": [0, 0]}},
+        {"field": "budget_inr", "value": {"budget_inr": 12000, "preferred_areas": ["Koramangala", "HSR Layout"], "occupancy_pref": "single"}},
+        {"field": "aadhaar_available", "value": "yes"},
+    ], expected_band=4)
 
-# ── Summary ──────────────────────────────────────────────
-print(f"\n{'='*50}")
-all_ok = ok1 and ok2 and ok3
-print(f"{'✅ All tests passed!' if all_ok else '❌ Some tests failed.'}")
+    # ── Summary ──────────────────────────────────────────────
+    print(f"\n{'='*50}")
+    all_ok = ok1 and ok2 and ok3
+    print(f"{'✅ All tests passed!' if all_ok else '❌ Some tests failed.'}")

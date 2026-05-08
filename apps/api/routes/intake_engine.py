@@ -197,7 +197,7 @@ def get_completed_fields(profile: dict[str, Any]) -> set[str]:
         if key in ("seeker_type", "current_city"):
             # These are pre-populated, don't count as "completed turns"
             continue
-        if value is not None and value != "" and value != [] and value != 0:
+        if value is not None and value != "" and value != []:
             completed.add(key)
     return completed
 
@@ -248,6 +248,12 @@ def apply_answer(
         return profile
 
     turn_def = TURN_SEQUENCE[current_step]
+    expected_field = turn_def["turn"].field
+    if answer_field != expected_field:
+        raise ValueError(
+            f"Mismatched answer field. Expected '{expected_field}', got '{answer_field}'."
+        )
+
     fields = turn_def["fields"]
 
     # The answer_value can be a dict with multiple fields or a single value
