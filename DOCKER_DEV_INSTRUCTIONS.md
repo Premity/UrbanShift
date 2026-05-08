@@ -135,6 +135,15 @@ make seed
 
 ---
 
+## Refreshing Jobs (Scrapers)
+
+```bash
+make refresh-jobs
+# Runs: docker compose exec api python -m scripts.refresh_jobs
+```
+
+---
+
 ## Hot Reload / Live Development
 
 Both services are configured for hot reload:

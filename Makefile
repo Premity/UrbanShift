@@ -15,3 +15,7 @@ migrate:
 
 seed:
 	docker compose exec api python -m scripts.seed_db
+
+refresh-jobs:
+	docker compose exec api python -m scripts.refresh_jobs
+
