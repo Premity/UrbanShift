@@ -3,6 +3,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from routes.session import router as session_router
+from routes.profile import router as profile_router
+
 app = FastAPI(
     title="UrbanShift API",
     description="AI-powered urban migrant assistance platform",
@@ -16,6 +19,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# ── Routers ──────────────────────────────────────────────
+app.include_router(session_router)
+app.include_router(profile_router)
 
 
 @app.get("/api/health")
