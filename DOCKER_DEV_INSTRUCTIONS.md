@@ -93,12 +93,12 @@ Or use **Adminer** at `http://localhost:8080`:
 
 ```bash
 # ALWAYS install inside the container
-docker compose exec api uv pip install <package>
+docker compose exec api uv pip install --system <package>
 
 # To add to pyproject.toml permanently (preferred)
 # 1. Edit apps/api/pyproject.toml on host (file is volume-mounted)
 # 2. Then sync inside container:
-docker compose exec api uv pip install -e .
+docker compose exec api uv pip install --system -r pyproject.toml
 ```
 
 ### Node (Web)
@@ -174,7 +174,7 @@ docker compose build web
 
 | ❌ Don't | ✅ Do Instead |
 |----------|--------------|
-| Run `uv sync` on host machine | `docker compose exec api uv pip install -e .` |
+| Run `uv sync` on host machine | `docker compose exec api uv pip install --system -r pyproject.toml` |
 | Run `pnpm install` on host machine | `docker compose exec web pnpm install` |
 | Run `python main.py` on host | `docker compose exec api python main.py` |
 | Connect to postgres from host directly | Use Adminer at `:8080` or `docker compose exec db psql` |
