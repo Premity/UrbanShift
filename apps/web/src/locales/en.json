@@ -4,8 +4,15 @@
   },
   "landing": {
     "title": "UrbanShift",
-    "subtitle": "AI-powered urban migrant assistance platform",
+    "eyebrow": "For India's Urban Migrants",
+    "headline_1": "Find Work.",
+    "headline_2": "Find Home.",
+    "headline_3": "Find Schemes.",
+    "subtitle": "AI-powered guidance for urban migrant workers — in your language, in minutes.",
     "getStarted": "Get Started",
+    "trust_states": "All major states",
+    "trust_users": "Free to use",
+    "trust_free": "No hidden fees",
     "seekerType": {
       "job": "Jobs",
       "housing": "Housing",
@@ -16,5 +23,38 @@
     "en": "English",
     "hi": "हिंदी",
     "kn": "ಕನ್ನಡ"
+  },
+  "intake": {
+    "title": "Tell us about yourself",
+    "subtitle": "We'll find the best schemes, jobs, and housing for you",
+    "next": "Next",
+    "skip": "Skip",
+    "complete": "See my plan",
+    "turn_of": "{{current}} of {{total}}",
+    "seekerType": {
+      "label": "What are you looking for?",
+      "job": "Jobs",
+      "housing": "Housing",
+      "both": "Both Jobs & Housing"
+    },
+    "progress": "Intake progress",
+    "loading": "Loading response"
+  },
+  "confirm": {
+    "title": "Review your profile",
+    "subtitle": "We'll use this to find the best matches for you",
+    "confirm": "Find my plan",
+    "edit": "Edit",
+    "seeker_type": "Looking for",
+    "age": "Age",
+    "gender": "Gender",
+    "origin_state": "From",
+    "sector": "Sector",
+    "education": "Education",
+    "employment_status": "Employment",
+    "worker_band": "Worker band",
+    "aadhaar": "Aadhaar available",
+    "retry": "Retry",
+    "submitting": "Submitting…"
   }
 }
