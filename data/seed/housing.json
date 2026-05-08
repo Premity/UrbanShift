@@ -1,0 +1,1999 @@
+[
+    {
+        "id": "housing_001",
+        "name": "Whitefield PG 1",
+        "area": "Whitefield",
+        "lat": 13.0117,
+        "lng": 77.7496,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 8000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-whitefield_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_002",
+        "name": "Whitefield PG 2",
+        "area": "Whitefield",
+        "lat": 13.0117,
+        "lng": 77.7496,
+        "type": "pg",
+        "price_min": 4000,
+        "price_max": 6000,
+        "occupancy": "triple",
+        "gender": "male",
+        "amenities": [
+            "wifi"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-pattandur_agrahara_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_003",
+        "name": "Whitefield PG 3",
+        "area": "Whitefield",
+        "lat": 13.0117,
+        "lng": 77.7496,
+        "type": "pg",
+        "price_min": 6000,
+        "price_max": 10000,
+        "occupancy": "single",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "ac",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-upkar_layout_whitefield_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_004",
+        "name": "Whitefield Girls PG",
+        "area": "Whitefield",
+        "lat": 13.0117,
+        "lng": 77.7496,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 8000,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-whitefield_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_005",
+        "name": "HSR Layout PG 1",
+        "area": "HSR Layout",
+        "lat": 12.9121,
+        "lng": 77.6446,
+        "type": "pg",
+        "price_min": 6000,
+        "price_max": 9000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-hsr_layout_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_006",
+        "name": "HSR Layout PG 2",
+        "area": "HSR Layout",
+        "lat": 12.9121,
+        "lng": 77.6446,
+        "type": "pg",
+        "price_min": 4000,
+        "price_max": 6000,
+        "occupancy": "triple",
+        "gender": "male",
+        "amenities": [
+            "wifi"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-hsr_layout_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_007",
+        "name": "HSR Layout Girls PG",
+        "area": "HSR Layout",
+        "lat": 12.9121,
+        "lng": 77.6446,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 7000,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-hsr_layout_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_008",
+        "name": "Koramangala PG 1",
+        "area": "Koramangala",
+        "lat": 12.9352,
+        "lng": 77.6245,
+        "type": "pg",
+        "price_min": 7000,
+        "price_max": 12000,
+        "occupancy": "single",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "ac",
+            "food",
+            "laundry"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-koramangala_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_009",
+        "name": "Koramangala PG 2",
+        "area": "Koramangala",
+        "lat": 12.9352,
+        "lng": 77.6245,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 7000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-koramangala_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_010",
+        "name": "Koramangala Girls PG",
+        "area": "Koramangala",
+        "lat": 12.9352,
+        "lng": 77.6245,
+        "type": "pg",
+        "price_min": 6000,
+        "price_max": 9000,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food",
+            "laundry"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-koramangala_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_011",
+        "name": "BTM Layout PG 1",
+        "area": "BTM",
+        "lat": 12.9165,
+        "lng": 77.61,
+        "type": "pg",
+        "price_min": 5500,
+        "price_max": 8000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-btm_layout_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_012",
+        "name": "BTM Layout PG 2",
+        "area": "BTM",
+        "lat": 12.9165,
+        "lng": 77.61,
+        "type": "pg",
+        "price_min": 3500,
+        "price_max": 5000,
+        "occupancy": "triple",
+        "gender": "male",
+        "amenities": [
+            "wifi"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-btm_layout_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_013",
+        "name": "BTM Layout Girls PG",
+        "area": "BTM",
+        "lat": 12.9165,
+        "lng": 77.61,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 7000,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-btm_layout_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_014",
+        "name": "Marathahalli PG 1",
+        "area": "Marathahalli",
+        "lat": 13.008,
+        "lng": 77.701,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 7000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-marathahalli_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_015",
+        "name": "Marathahalli PG 2",
+        "area": "Marathahalli",
+        "lat": 13.008,
+        "lng": 77.701,
+        "type": "pg",
+        "price_min": 3000,
+        "price_max": 4500,
+        "occupancy": "triple",
+        "gender": "male",
+        "amenities": [
+            "wifi"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-marathahalli_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_016",
+        "name": "Marathahalli Girls PG",
+        "area": "Marathahalli",
+        "lat": 13.008,
+        "lng": 77.701,
+        "type": "pg",
+        "price_min": 4500,
+        "price_max": 6500,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-marathahalli_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_017",
+        "name": "Electronic City PG 1",
+        "area": "Electronic City",
+        "lat": 12.8456,
+        "lng": 77.6603,
+        "type": "pg",
+        "price_min": 4500,
+        "price_max": 6000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-electronic_city_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_018",
+        "name": "Electronic City PG 2",
+        "area": "Electronic City",
+        "lat": 12.8456,
+        "lng": 77.6603,
+        "type": "pg",
+        "price_min": 3000,
+        "price_max": 4000,
+        "occupancy": "triple",
+        "gender": "male",
+        "amenities": [
+            "wifi"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-electronic_city_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_019",
+        "name": "Electronic City Girls PG",
+        "area": "Electronic City",
+        "lat": 12.8456,
+        "lng": 77.6603,
+        "type": "pg",
+        "price_min": 4000,
+        "price_max": 5500,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-electronic_city_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_020",
+        "name": "Indiranagar PG 1",
+        "area": "Indiranagar",
+        "lat": 12.9784,
+        "lng": 77.6408,
+        "type": "pg",
+        "price_min": 7000,
+        "price_max": 10000,
+        "occupancy": "single",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "ac",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-indiranagar_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_021",
+        "name": "Indiranagar PG 2",
+        "area": "Indiranagar",
+        "lat": 12.9784,
+        "lng": 77.6408,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 7000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-indiranagar_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_022",
+        "name": "Indiranagar Girls PG",
+        "area": "Indiranagar",
+        "lat": 12.9784,
+        "lng": 77.6408,
+        "type": "pg",
+        "price_min": 6000,
+        "price_max": 8500,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food",
+            "laundry"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-indiranagar_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_023",
+        "name": "Jayanagar PG 1",
+        "area": "Jayanagar",
+        "lat": 12.925,
+        "lng": 77.5833,
+        "type": "pg",
+        "price_min": 5500,
+        "price_max": 7500,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-jayanagar_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_024",
+        "name": "Jayanagar PG 2",
+        "area": "Jayanagar",
+        "lat": 12.925,
+        "lng": 77.5833,
+        "type": "pg",
+        "price_min": 3500,
+        "price_max": 5000,
+        "occupancy": "triple",
+        "gender": "male",
+        "amenities": [
+            "wifi"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-jayanagar_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_025",
+        "name": "Jayanagar Girls PG",
+        "area": "Jayanagar",
+        "lat": 12.925,
+        "lng": 77.5833,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 7000,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-jayanagar_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_026",
+        "name": "Hebbal PG",
+        "area": "Hebbal",
+        "lat": 13.035,
+        "lng": 77.597,
+        "type": "pg",
+        "price_min": 5500,
+        "price_max": 7000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-hebbal_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_027",
+        "name": "Yelahanka PG",
+        "area": "Yelahanka",
+        "lat": 13.1007,
+        "lng": 77.5964,
+        "type": "pg",
+        "price_min": 4000,
+        "price_max": 5500,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-yelahanka_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_028",
+        "name": "Yelahanka Girls Hostel",
+        "area": "Yelahanka",
+        "lat": 13.1007,
+        "lng": 77.5964,
+        "type": "hostel",
+        "price_min": 3500,
+        "price_max": 5000,
+        "occupancy": "triple",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-yelahanka_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_029",
+        "name": "Brookfield PG",
+        "area": "Brookfield",
+        "lat": 13.028,
+        "lng": 77.711,
+        "type": "pg",
+        "price_min": 5500,
+        "price_max": 7500,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-brookfield_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_030",
+        "name": "Brookfield Girls PG",
+        "area": "Brookfield",
+        "lat": 13.028,
+        "lng": 77.711,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 7000,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-brookfield_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_031",
+        "name": "Kengeri PG",
+        "area": "Kengeri",
+        "lat": 12.9076,
+        "lng": 77.4852,
+        "type": "pg",
+        "price_min": 3500,
+        "price_max": 5000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-kengeri_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_032",
+        "name": "Banashankari PG",
+        "area": "Banashankari",
+        "lat": 12.925,
+        "lng": 77.5833,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 7000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-banashankari_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_033",
+        "name": "JP Nagar PG 1",
+        "area": "JP Nagar",
+        "lat": 12.925,
+        "lng": 77.5833,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 8000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-jp_nagar_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_034",
+        "name": "JP Nagar PG 2",
+        "area": "JP Nagar",
+        "lat": 12.925,
+        "lng": 77.5833,
+        "type": "pg",
+        "price_min": 3500,
+        "price_max": 5000,
+        "occupancy": "triple",
+        "gender": "male",
+        "amenities": [
+            "wifi"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-jp_nagar_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_035",
+        "name": "JP Nagar Girls PG",
+        "area": "JP Nagar",
+        "lat": 12.925,
+        "lng": 77.5833,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 8000,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-jp_nagar_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_036",
+        "name": "Rajajinagar PG 1",
+        "area": "Rajajinagar",
+        "lat": 12.988,
+        "lng": 77.567,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 7000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-rajajinagar_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_037",
+        "name": "Rajajinagar PG 2",
+        "area": "Rajajinagar",
+        "lat": 12.988,
+        "lng": 77.567,
+        "type": "pg",
+        "price_min": 3500,
+        "price_max": 5000,
+        "occupancy": "triple",
+        "gender": "male",
+        "amenities": [
+            "wifi"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-rajajinagar_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_038",
+        "name": "Rajajinagar Girls PG",
+        "area": "Rajajinagar",
+        "lat": 12.988,
+        "lng": 77.567,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 8000,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-rajajinagar_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_039",
+        "name": "Vijayanagar PG",
+        "area": "Vijayanagar",
+        "lat": 12.971,
+        "lng": 77.536,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 7000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-vijayanagar_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_040",
+        "name": "Vijayanagar Girls PG",
+        "area": "Vijayanagar",
+        "lat": 12.971,
+        "lng": 77.536,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 7000,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-vijayanagar_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_041",
+        "name": "Malleshwaram PG",
+        "area": "Malleshwaram",
+        "lat": 13.003,
+        "lng": 77.57,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 8000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-malleshwaram_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_042",
+        "name": "Malleshwaram Girls PG",
+        "area": "Malleshwaram",
+        "lat": 13.003,
+        "lng": 77.57,
+        "type": "pg",
+        "price_min": 6000,
+        "price_max": 9000,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-malleshwaram_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_043",
+        "name": "Bellandur PG 1",
+        "area": "Bellandur",
+        "lat": 12.925,
+        "lng": 77.676,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 8000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-bellandur_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_044",
+        "name": "Bellandur PG 2",
+        "area": "Bellandur",
+        "lat": 12.925,
+        "lng": 77.676,
+        "type": "pg",
+        "price_min": 3500,
+        "price_max": 5000,
+        "occupancy": "triple",
+        "gender": "male",
+        "amenities": [
+            "wifi"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-bellandur_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_045",
+        "name": "Bellandur Girls PG",
+        "area": "Bellandur",
+        "lat": 12.925,
+        "lng": 77.676,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 7000,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-bellandur_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_046",
+        "name": "Kadugodi PG",
+        "area": "Kadugodi",
+        "lat": 13.0117,
+        "lng": 77.7496,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 11000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-kadugodi_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_047",
+        "name": "Kadugodi Girls PG",
+        "area": "Kadugodi",
+        "lat": 13.0117,
+        "lng": 77.7496,
+        "type": "pg",
+        "price_min": 5000,
+        "price_max": 8000,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-kadugodi_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_048",
+        "name": "Hoodi PG",
+        "area": "Hoodi",
+        "lat": 13.0117,
+        "lng": 77.7496,
+        "type": "pg",
+        "price_min": 4000,
+        "price_max": 7000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-hoodi_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_049",
+        "name": "Hoodi Girls PG",
+        "area": "Hoodi",
+        "lat": 13.0117,
+        "lng": 77.7496,
+        "type": "pg",
+        "price_min": 4000,
+        "price_max": 6000,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-ladies-in-hoodi_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing_050",
+        "name": "Varthur PG",
+        "area": "Varthur",
+        "lat": 13.0117,
+        "lng": 77.7496,
+        "type": "pg",
+        "price_min": 3500,
+        "price_max": 6000,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "food"
+        ],
+        "source_url": "https://www.nobroker.in/pg-for-gents-in-varthur_bangalore",
+        "source_name": "NoBroker",
+        "scraped_at": "2025-05-08T00:00:00Z"
+    },
+    {
+        "id": "housing-051",
+        "name": "Stanza Living Theta House",
+        "area": "Whitefield",
+        "lat": 12.809160851345446,
+        "lng": 77.59644922775482,
+        "type": "pg",
+        "price_min": 3687,
+        "price_max": 6596,
+        "occupancy": "dorm",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-whitefield/female/theta-house?lat=12.809160851345446&lng=77.59644922775482",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680827+00:00"
+    },
+    {
+        "id": "housing-052",
+        "name": "Stanza Living Beta House",
+        "area": "HSR Layout",
+        "lat": 12.847271550151735,
+        "lng": 77.57836209661106,
+        "type": "pg",
+        "price_min": 5042,
+        "price_max": 6584,
+        "occupancy": "triple",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-hsr-layout/unisex/beta-house?lat=12.847271550151735&lng=77.57836209661106",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680848+00:00"
+    },
+    {
+        "id": "housing-053",
+        "name": "Stanza Living Gamma House",
+        "area": "Marathahalli",
+        "lat": 12.807127496234934,
+        "lng": 77.64957395804936,
+        "type": "pg",
+        "price_min": 8256,
+        "price_max": 11246,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-marathahalli/female/gamma-house?lat=12.807127496234934&lng=77.64957395804936",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680877+00:00"
+    },
+    {
+        "id": "housing-054",
+        "name": "Stanza Living Nu House",
+        "area": "Electronic City",
+        "lat": 12.944892423745353,
+        "lng": 77.57421133658919,
+        "type": "pg",
+        "price_min": 14061,
+        "price_max": 15162,
+        "occupancy": "single",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-electronic-city/male/nu-house?lat=12.944892423745353&lng=77.57421133658919",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680885+00:00"
+    },
+    {
+        "id": "housing-055",
+        "name": "Stanza Living Theta House",
+        "area": "BTM",
+        "lat": 12.830618362235327,
+        "lng": 77.57749293694536,
+        "type": "pg",
+        "price_min": 2666,
+        "price_max": 4842,
+        "occupancy": "dorm",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-btm/unisex/theta-house?lat=12.830618362235327&lng=77.57749293694536",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680894+00:00"
+    },
+    {
+        "id": "housing-056",
+        "name": "Stanza Living Theta House",
+        "area": "Koramangala",
+        "lat": 12.9355440656288,
+        "lng": 77.5387116016683,
+        "type": "pg",
+        "price_min": 6838,
+        "price_max": 8061,
+        "occupancy": "triple",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-koramangala/female/theta-house?lat=12.9355440656288&lng=77.5387116016683",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680900+00:00"
+    },
+    {
+        "id": "housing-057",
+        "name": "Stanza Living Alpha House",
+        "area": "Indiranagar",
+        "lat": 12.951650805785748,
+        "lng": 77.65417044316139,
+        "type": "pg",
+        "price_min": 8185,
+        "price_max": 9552,
+        "occupancy": "double",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-indiranagar/unisex/alpha-house?lat=12.951650805785748&lng=77.65417044316139",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680906+00:00"
+    },
+    {
+        "id": "housing-058",
+        "name": "Stanza Living Epsilon House",
+        "area": "Hebbal",
+        "lat": 12.814691625075062,
+        "lng": 77.54339885515125,
+        "type": "pg",
+        "price_min": 11471,
+        "price_max": 13547,
+        "occupancy": "single",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-hebbal/female/epsilon-house?lat=12.814691625075062&lng=77.54339885515125",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680912+00:00"
+    },
+    {
+        "id": "housing-059",
+        "name": "Stanza Living Zeta House",
+        "area": "Jayanagar",
+        "lat": 12.901330889220407,
+        "lng": 77.67857951458458,
+        "type": "pg",
+        "price_min": 2977,
+        "price_max": 5205,
+        "occupancy": "dorm",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-jayanagar/unisex/zeta-house?lat=12.901330889220407&lng=77.67857951458458",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680917+00:00"
+    },
+    {
+        "id": "housing-060",
+        "name": "Stanza Living Kappa House",
+        "area": "Yelahanka",
+        "lat": 12.920454988430498,
+        "lng": 77.58058808354065,
+        "type": "pg",
+        "price_min": 4807,
+        "price_max": 6800,
+        "occupancy": "triple",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-yelahanka/unisex/kappa-house?lat=12.920454988430498&lng=77.58058808354065",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680924+00:00"
+    },
+    {
+        "id": "housing-061",
+        "name": "Stanza Living Beta House",
+        "area": "Whitefield",
+        "lat": 12.905617931197131,
+        "lng": 77.51374377936963,
+        "type": "pg",
+        "price_min": 9963,
+        "price_max": 11856,
+        "occupancy": "double",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-whitefield/unisex/beta-house?lat=12.905617931197131&lng=77.51374377936963",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680929+00:00"
+    },
+    {
+        "id": "housing-062",
+        "name": "Stanza Living Zeta House",
+        "area": "HSR Layout",
+        "lat": 12.99141712696995,
+        "lng": 77.65074733333925,
+        "type": "pg",
+        "price_min": 12707,
+        "price_max": 14423,
+        "occupancy": "single",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-hsr-layout/male/zeta-house?lat=12.99141712696995&lng=77.65074733333925",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680934+00:00"
+    },
+    {
+        "id": "housing-063",
+        "name": "Stanza Living Alpha House",
+        "area": "Marathahalli",
+        "lat": 12.882942852934768,
+        "lng": 77.61927230777756,
+        "type": "pg",
+        "price_min": 2813,
+        "price_max": 5429,
+        "occupancy": "dorm",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-marathahalli/male/alpha-house?lat=12.882942852934768&lng=77.61927230777756",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680938+00:00"
+    },
+    {
+        "id": "housing-064",
+        "name": "Stanza Living Eta House",
+        "area": "Electronic City",
+        "lat": 12.8046993723747,
+        "lng": 77.52585247331194,
+        "type": "pg",
+        "price_min": 5882,
+        "price_max": 7809,
+        "occupancy": "triple",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-electronic-city/female/eta-house?lat=12.8046993723747&lng=77.52585247331194",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680943+00:00"
+    },
+    {
+        "id": "housing-065",
+        "name": "Stanza Living Nu House",
+        "area": "BTM",
+        "lat": 12.983328277598316,
+        "lng": 77.50086502320913,
+        "type": "pg",
+        "price_min": 7815,
+        "price_max": 9275,
+        "occupancy": "double",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-btm/unisex/nu-house?lat=12.983328277598316&lng=77.50086502320913",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680949+00:00"
+    },
+    {
+        "id": "housing-066",
+        "name": "Stanza Living Kappa House",
+        "area": "Koramangala",
+        "lat": 12.865868741090877,
+        "lng": 77.56495090613558,
+        "type": "pg",
+        "price_min": 14694,
+        "price_max": 16719,
+        "occupancy": "single",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-koramangala/female/kappa-house?lat=12.865868741090877&lng=77.56495090613558",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680953+00:00"
+    },
+    {
+        "id": "housing-067",
+        "name": "Stanza Living Kappa House",
+        "area": "Indiranagar",
+        "lat": 12.965360102551083,
+        "lng": 77.63765386920127,
+        "type": "pg",
+        "price_min": 3415,
+        "price_max": 6283,
+        "occupancy": "dorm",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-indiranagar/male/kappa-house?lat=12.965360102551083&lng=77.63765386920127",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680957+00:00"
+    },
+    {
+        "id": "housing-068",
+        "name": "Stanza Living Iota House",
+        "area": "Hebbal",
+        "lat": 12.945562582304051,
+        "lng": 77.52764606825228,
+        "type": "pg",
+        "price_min": 6899,
+        "price_max": 9330,
+        "occupancy": "triple",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-hebbal/unisex/iota-house?lat=12.945562582304051&lng=77.52764606825228",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680961+00:00"
+    },
+    {
+        "id": "housing-069",
+        "name": "Stanza Living Zeta House",
+        "area": "Jayanagar",
+        "lat": 12.998478713113375,
+        "lng": 77.51184678926887,
+        "type": "pg",
+        "price_min": 9130,
+        "price_max": 10415,
+        "occupancy": "double",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-jayanagar/unisex/zeta-house?lat=12.998478713113375&lng=77.51184678926887",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680965+00:00"
+    },
+    {
+        "id": "housing-070",
+        "name": "Stanza Living Omicron House",
+        "area": "Yelahanka",
+        "lat": 12.886653240027982,
+        "lng": 77.54843540324829,
+        "type": "pg",
+        "price_min": 13251,
+        "price_max": 15911,
+        "occupancy": "single",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-yelahanka/unisex/omicron-house?lat=12.886653240027982&lng=77.54843540324829",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680969+00:00"
+    },
+    {
+        "id": "housing-071",
+        "name": "Stanza Living Theta House",
+        "area": "Whitefield",
+        "lat": 12.834715776749242,
+        "lng": 77.66288116801087,
+        "type": "pg",
+        "price_min": 2674,
+        "price_max": 4032,
+        "occupancy": "dorm",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-whitefield/female/theta-house?lat=12.834715776749242&lng=77.66288116801087",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680974+00:00"
+    },
+    {
+        "id": "housing-072",
+        "name": "Stanza Living Eta House",
+        "area": "HSR Layout",
+        "lat": 12.948278335399113,
+        "lng": 77.68755932845004,
+        "type": "pg",
+        "price_min": 5918,
+        "price_max": 8061,
+        "occupancy": "triple",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-hsr-layout/unisex/eta-house?lat=12.948278335399113&lng=77.68755932845004",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680978+00:00"
+    },
+    {
+        "id": "housing-073",
+        "name": "Stanza Living Omicron House",
+        "area": "Marathahalli",
+        "lat": 12.956350997010412,
+        "lng": 77.52282021939338,
+        "type": "pg",
+        "price_min": 7654,
+        "price_max": 9867,
+        "occupancy": "double",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-marathahalli/male/omicron-house?lat=12.956350997010412&lng=77.52282021939338",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680982+00:00"
+    },
+    {
+        "id": "housing-074",
+        "name": "Stanza Living Eta House",
+        "area": "Electronic City",
+        "lat": 12.828181861195285,
+        "lng": 77.6549045291821,
+        "type": "pg",
+        "price_min": 14659,
+        "price_max": 16247,
+        "occupancy": "single",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-electronic-city/unisex/eta-house?lat=12.828181861195285&lng=77.6549045291821",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680987+00:00"
+    },
+    {
+        "id": "housing-075",
+        "name": "Stanza Living Delta House",
+        "area": "BTM",
+        "lat": 12.959437121290035,
+        "lng": 77.54746210946077,
+        "type": "pg",
+        "price_min": 2964,
+        "price_max": 4487,
+        "occupancy": "dorm",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-btm/male/delta-house?lat=12.959437121290035&lng=77.54746210946077",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680994+00:00"
+    },
+    {
+        "id": "housing-076",
+        "name": "Stanza Living Epsilon House",
+        "area": "Koramangala",
+        "lat": 12.885948060055416,
+        "lng": 77.51816215966647,
+        "type": "pg",
+        "price_min": 5515,
+        "price_max": 6857,
+        "occupancy": "triple",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-koramangala/female/epsilon-house?lat=12.885948060055416&lng=77.51816215966647",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.680998+00:00"
+    },
+    {
+        "id": "housing-077",
+        "name": "Stanza Living Epsilon House",
+        "area": "Indiranagar",
+        "lat": 12.905751301567337,
+        "lng": 77.50841946704008,
+        "type": "pg",
+        "price_min": 8458,
+        "price_max": 10017,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-indiranagar/female/epsilon-house?lat=12.905751301567337&lng=77.50841946704008",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681002+00:00"
+    },
+    {
+        "id": "housing-078",
+        "name": "Stanza Living Alpha House",
+        "area": "Hebbal",
+        "lat": 12.82542881495215,
+        "lng": 77.56287685183837,
+        "type": "pg",
+        "price_min": 14674,
+        "price_max": 16345,
+        "occupancy": "single",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-hebbal/unisex/alpha-house?lat=12.82542881495215&lng=77.56287685183837",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681007+00:00"
+    },
+    {
+        "id": "housing-079",
+        "name": "Stanza Living Beta House",
+        "area": "Jayanagar",
+        "lat": 12.895894001331497,
+        "lng": 77.60064956307609,
+        "type": "pg",
+        "price_min": 3426,
+        "price_max": 6073,
+        "occupancy": "dorm",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-jayanagar/unisex/beta-house?lat=12.895894001331497&lng=77.60064956307609",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681011+00:00"
+    },
+    {
+        "id": "housing-080",
+        "name": "Stanza Living Eta House",
+        "area": "Yelahanka",
+        "lat": 12.882631478380576,
+        "lng": 77.69202184085806,
+        "type": "pg",
+        "price_min": 6947,
+        "price_max": 9698,
+        "occupancy": "triple",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-yelahanka/male/eta-house?lat=12.882631478380576&lng=77.69202184085806",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681015+00:00"
+    },
+    {
+        "id": "housing-081",
+        "name": "Stanza Living Alpha House",
+        "area": "Whitefield",
+        "lat": 12.873787380764158,
+        "lng": 77.57428965708516,
+        "type": "pg",
+        "price_min": 9760,
+        "price_max": 11795,
+        "occupancy": "double",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-whitefield/unisex/alpha-house?lat=12.873787380764158&lng=77.57428965708516",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681019+00:00"
+    },
+    {
+        "id": "housing-082",
+        "name": "Stanza Living Theta House",
+        "area": "HSR Layout",
+        "lat": 12.899764003314631,
+        "lng": 77.52638685149978,
+        "type": "pg",
+        "price_min": 14192,
+        "price_max": 16267,
+        "occupancy": "single",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-hsr-layout/unisex/theta-house?lat=12.899764003314631&lng=77.52638685149978",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681023+00:00"
+    },
+    {
+        "id": "housing-083",
+        "name": "Stanza Living Nu House",
+        "area": "Marathahalli",
+        "lat": 12.845638275533947,
+        "lng": 77.55986639720892,
+        "type": "pg",
+        "price_min": 3352,
+        "price_max": 4976,
+        "occupancy": "dorm",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-marathahalli/female/nu-house?lat=12.845638275533947&lng=77.55986639720892",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681027+00:00"
+    },
+    {
+        "id": "housing-084",
+        "name": "Stanza Living Lambda House",
+        "area": "Electronic City",
+        "lat": 12.813228056822213,
+        "lng": 77.55739128144168,
+        "type": "pg",
+        "price_min": 6218,
+        "price_max": 9015,
+        "occupancy": "triple",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-electronic-city/unisex/lambda-house?lat=12.813228056822213&lng=77.55739128144168",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681034+00:00"
+    },
+    {
+        "id": "housing-085",
+        "name": "Stanza Living Xi House",
+        "area": "BTM",
+        "lat": 12.963975680281242,
+        "lng": 77.54445720250621,
+        "type": "pg",
+        "price_min": 8410,
+        "price_max": 10453,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-btm/female/xi-house?lat=12.963975680281242&lng=77.54445720250621",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681040+00:00"
+    },
+    {
+        "id": "housing-086",
+        "name": "Stanza Living Zeta House",
+        "area": "Koramangala",
+        "lat": 12.806969535668681,
+        "lng": 77.50281518694068,
+        "type": "pg",
+        "price_min": 14115,
+        "price_max": 15696,
+        "occupancy": "single",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-koramangala/female/zeta-house?lat=12.806969535668681&lng=77.50281518694068",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681046+00:00"
+    },
+    {
+        "id": "housing-087",
+        "name": "Stanza Living Theta House",
+        "area": "Indiranagar",
+        "lat": 12.999444131563509,
+        "lng": 77.54433121707967,
+        "type": "pg",
+        "price_min": 3381,
+        "price_max": 6037,
+        "occupancy": "dorm",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-indiranagar/female/theta-house?lat=12.999444131563509&lng=77.54433121707967",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681050+00:00"
+    },
+    {
+        "id": "housing-088",
+        "name": "Stanza Living Omicron House",
+        "area": "Hebbal",
+        "lat": 12.989610227629116,
+        "lng": 77.50034708102015,
+        "type": "pg",
+        "price_min": 4802,
+        "price_max": 6967,
+        "occupancy": "triple",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-hebbal/male/omicron-house?lat=12.989610227629116&lng=77.50034708102015",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681054+00:00"
+    },
+    {
+        "id": "housing-089",
+        "name": "Stanza Living Omicron House",
+        "area": "Jayanagar",
+        "lat": 12.82477145289745,
+        "lng": 77.57771173603714,
+        "type": "pg",
+        "price_min": 8295,
+        "price_max": 9690,
+        "occupancy": "double",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-jayanagar/unisex/omicron-house?lat=12.82477145289745&lng=77.57771173603714",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681058+00:00"
+    },
+    {
+        "id": "housing-090",
+        "name": "Stanza Living Gamma House",
+        "area": "Yelahanka",
+        "lat": 12.846148375840588,
+        "lng": 77.61826612013593,
+        "type": "pg",
+        "price_min": 13682,
+        "price_max": 16391,
+        "occupancy": "single",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-yelahanka/male/gamma-house?lat=12.846148375840588&lng=77.61826612013593",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681065+00:00"
+    },
+    {
+        "id": "housing-091",
+        "name": "Stanza Living Nu House",
+        "area": "Whitefield",
+        "lat": 12.838223273508767,
+        "lng": 77.62436122149235,
+        "type": "pg",
+        "price_min": 2725,
+        "price_max": 3890,
+        "occupancy": "dorm",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-whitefield/male/nu-house?lat=12.838223273508767&lng=77.62436122149235",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681069+00:00"
+    },
+    {
+        "id": "housing-092",
+        "name": "Stanza Living Beta House",
+        "area": "HSR Layout",
+        "lat": 12.902286170303917,
+        "lng": 77.68595560728672,
+        "type": "pg",
+        "price_min": 5473,
+        "price_max": 8448,
+        "occupancy": "triple",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-hsr-layout/male/beta-house?lat=12.902286170303917&lng=77.68595560728672",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681074+00:00"
+    },
+    {
+        "id": "housing-093",
+        "name": "Stanza Living Nu House",
+        "area": "Marathahalli",
+        "lat": 12.847741049780733,
+        "lng": 77.64938584929008,
+        "type": "pg",
+        "price_min": 7697,
+        "price_max": 8858,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-marathahalli/female/nu-house?lat=12.847741049780733&lng=77.64938584929008",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681078+00:00"
+    },
+    {
+        "id": "housing-094",
+        "name": "Stanza Living Zeta House",
+        "area": "Electronic City",
+        "lat": 12.80187122659686,
+        "lng": 77.68558138800297,
+        "type": "pg",
+        "price_min": 12411,
+        "price_max": 13523,
+        "occupancy": "single",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-electronic-city/male/zeta-house?lat=12.80187122659686&lng=77.68558138800297",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681082+00:00"
+    },
+    {
+        "id": "housing-095",
+        "name": "Stanza Living Gamma House",
+        "area": "BTM",
+        "lat": 12.974079131642782,
+        "lng": 77.55078035568418,
+        "type": "pg",
+        "price_min": 3751,
+        "price_max": 6629,
+        "occupancy": "dorm",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-btm/male/gamma-house?lat=12.974079131642782&lng=77.55078035568418",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681088+00:00"
+    },
+    {
+        "id": "housing-096",
+        "name": "Stanza Living Omicron House",
+        "area": "Koramangala",
+        "lat": 12.83273173796747,
+        "lng": 77.5970552787471,
+        "type": "pg",
+        "price_min": 5474,
+        "price_max": 7143,
+        "occupancy": "triple",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-koramangala/male/omicron-house?lat=12.83273173796747&lng=77.5970552787471",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681092+00:00"
+    },
+    {
+        "id": "housing-097",
+        "name": "Stanza Living Xi House",
+        "area": "Indiranagar",
+        "lat": 12.982244101787314,
+        "lng": 77.57251652847559,
+        "type": "pg",
+        "price_min": 8404,
+        "price_max": 10399,
+        "occupancy": "double",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-indiranagar/female/xi-house?lat=12.982244101787314&lng=77.57251652847559",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681096+00:00"
+    },
+    {
+        "id": "housing-098",
+        "name": "Stanza Living Epsilon House",
+        "area": "Hebbal",
+        "lat": 12.957696545249629,
+        "lng": 77.61291786658362,
+        "type": "pg",
+        "price_min": 13984,
+        "price_max": 15448,
+        "occupancy": "single",
+        "gender": "unisex",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-hebbal/unisex/epsilon-house?lat=12.957696545249629&lng=77.61291786658362",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681100+00:00"
+    },
+    {
+        "id": "housing-099",
+        "name": "Stanza Living Beta House",
+        "area": "Jayanagar",
+        "lat": 12.871559777669107,
+        "lng": 77.6250093167426,
+        "type": "pg",
+        "price_min": 3510,
+        "price_max": 4983,
+        "occupancy": "dorm",
+        "gender": "male",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-jayanagar/male/beta-house?lat=12.871559777669107&lng=77.6250093167426",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681104+00:00"
+    },
+    {
+        "id": "housing-100",
+        "name": "Stanza Living Epsilon House",
+        "area": "Yelahanka",
+        "lat": 12.878110263091138,
+        "lng": 77.56832480863247,
+        "type": "pg",
+        "price_min": 6480,
+        "price_max": 9374,
+        "occupancy": "triple",
+        "gender": "female",
+        "amenities": [
+            "wifi",
+            "meals",
+            "laundry",
+            "power_backup"
+        ],
+        "source_url": "https://www.stanzaliving.com/bengaluru/pg-hostel-in-yelahanka/female/epsilon-house?lat=12.878110263091138&lng=77.56832480863247",
+        "source_name": "Stanza Living",
+        "scraped_at": "2026-05-08T14:06:03.681109+00:00"
+    }
+]
