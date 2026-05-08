@@ -1,8 +1,8 @@
-# ── UrbanShift Web ── Node 20 + pnpm ─────────────────────
-FROM node:20-slim
+# ── UrbanShift Web ── Node 22 + pnpm 9 ────────────────────
+FROM node:22-alpine
 
-# Install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# Install pnpm 9 (v10 has breaking build-script approval requirements)
+RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml* ./
 
 # Install dependencies
-RUN pnpm install --frozen-lockfile || pnpm install
+RUN pnpm install --no-frozen-lockfile
 
 # Copy application source
 COPY . .
