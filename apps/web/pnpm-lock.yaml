@@ -33,7 +33,7 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       react-hook-form:
-        specifier: ^7.51.0
+        specifier: ^7.75.0
         version: 7.75.0(react@18.3.1)
       react-i18next:
         specifier: ^14.1.2

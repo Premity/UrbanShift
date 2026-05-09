@@ -1,6 +1,6 @@
 import React from 'react';
 import { EligibilityBadge, MatchScore, CommuteChip, SchemeLinkedBadge, CitationLink } from './Badges';
-import { FileText, Building2, Briefcase, CheckSquare, Square, ChevronRight } from 'lucide-react';
+import { FileText, Building2, Briefcase, CheckSquare, Square, ChevronRight, ExternalLink } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../../lib/utils';
 
@@ -25,17 +25,18 @@ function BaseCard({ children, className, onClick }: CardProps) {
   );
 }
 
-export function PlanSummaryCard() {
+export function PlanSummaryCard({ completed = 0, total = 0 }: { completed?: number; total?: number }) {
   const { t } = useTranslation();
+  const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
   return (
     <BaseCard className="bg-gradient-to-br from-teal-500 to-teal-700 text-white border-transparent p-5">
-      <h2 className="text-xl font-bold mb-2">{t('results.plan_title', 'Your 5-Step Transition Plan')}</h2>
+      <h2 className="text-xl font-bold mb-2">{t('results.plan_title', 'Your Transition Plan')}</h2>
       <p className="text-teal-50 text-sm mb-4">
-        {t('results.plan_desc', 'We have matched you with schemes, jobs, and housing options that fit your profile. Follow these steps to secure your relocation.')}
+        {t('results.plan_desc', 'We matched you with schemes, jobs, and housing that fit your profile.')}
       </p>
       <div className="w-full bg-teal-800/50 rounded-lg p-3 text-sm flex items-center justify-between">
-        <span>{t('results.plan_progress', '0 of 5 steps completed')}</span>
-        <span className="font-semibold text-teal-100">0%</span>
+        <span>{t('results.plan_progress', '{{completed}} of {{total}} steps completed', { completed, total })}</span>
+        <span className="font-semibold text-teal-100">{pct}%</span>
       </div>
     </BaseCard>
   );

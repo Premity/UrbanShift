@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { BottomNav, NavTab } from '../components/shared/BottomNav';
 import { FileText, Building2, Briefcase, LayoutList } from 'lucide-react';
-import { 
-  PlanSummaryCard, 
-  SchemeCard, 
-  JobCard, 
-  HousingCard, 
-  ChecklistItem 
+import {
+  PlanSummaryCard,
+  SchemeCard,
+  JobCard,
+  HousingCard,
+  ChecklistItem
 } from '../components/results/Cards';
 import { FilteredOutPanel, FilteredOutItem } from '../components/results/FilteredOutPanel';
 import { Drawer } from '../components/shared/Drawer';
+import { LangSwitcher } from '../components/shared/LangSwitcher';
 import { useTranslation } from 'react-i18next';
 
 // --- MOCK DATA ---
@@ -21,7 +22,9 @@ const MOCK_SCHEMES = [
     benefitsSummary: 'Collateral free credit up to ₹1 Lakh, stipend of ₹500/day during training.',
     sourceUrl: 'https://pmvishwakarma.gov.in',
     sourceName: 'pmvishwakarma.gov.in',
-    detail: 'Full detail text here...'
+    eligibilityCriteria: ['Age 18–60', 'Self-employed artisan or craftsperson', 'Not enrolled in PMEGP/PM SVANidhi'],
+    howToApply: 'Register at your nearest Common Service Centre (CSC) with Aadhaar and trade proof.',
+    benefit: '₹500/day training stipend + collateral-free credit up to ₹1 Lakh at 5% interest.'
   },
   {
     id: 's2',
@@ -30,7 +33,9 @@ const MOCK_SCHEMES = [
     benefitsSummary: 'Free upskilling courses and guaranteed interview opportunities. Domicile check required.',
     sourceUrl: 'https://skillconnect.ka.gov.in',
     sourceName: 'skillconnect.ka.gov.in',
-    detail: 'Full detail text here...'
+    eligibilityCriteria: ['Karnataka domicile (verify required)', 'Age 18–45', 'Class 10 pass or above'],
+    howToApply: 'Apply online at skillconnect.ka.gov.in with domicile certificate and education proof.',
+    benefit: 'Free skill training + guaranteed job interview with partner employers.'
   }
 ];
 
@@ -46,7 +51,9 @@ const MOCK_JOBS = [
     commuteMinutes: 15,
     sourceUrl: 'https://ncs.gov.in',
     sourceName: 'NCS Portal',
-    detail: 'Full detail text here...'
+    requirements: ['Two-wheeler license', 'Own smartphone', 'Age 18–40'],
+    perks: 'Weekly pay, accident insurance, fuel incentive up to ₹3,000/month.',
+    howToApply: 'Apply via NCS Portal or walk-in at Zomato onboarding center, Bellandur.'
   },
   {
     id: 'j2',
@@ -58,7 +65,9 @@ const MOCK_JOBS = [
     commuteMinutes: 45,
     sourceUrl: 'https://apna.co',
     sourceName: 'Apna',
-    detail: 'Full detail text here...'
+    requirements: ['Class 8 pass', 'Physical fitness', 'Willing to work rotational shifts'],
+    perks: 'PF/ESI, canteen subsidy, overtime pay.',
+    howToApply: 'Apply via Apna app or directly at Amazon FC, Doddaballapur Road.'
   }
 ];
 
@@ -72,7 +81,9 @@ const MOCK_HOUSING = [
     commuteMinutes: 15,
     sourceUrl: 'https://nobroker.in',
     sourceName: 'NoBroker',
-    detail: 'Full detail text here...'
+    amenities: ['WiFi', 'Meals included', 'Laundry', 'CCTV'],
+    deposit: '₹6,500 (1 month)',
+    contact: 'Listed on NoBroker — no broker fee.'
   },
   {
     id: 'h2',
@@ -83,7 +94,9 @@ const MOCK_HOUSING = [
     commuteMinutes: 50,
     sourceUrl: 'https://nobroker.in',
     sourceName: 'NoBroker',
-    detail: 'Full detail text here...'
+    amenities: ['AC', 'Attached bath', 'Power backup', 'Security'],
+    deposit: '₹18,000 (2 months)',
+    contact: 'Listed on NoBroker — no broker fee.'
   }
 ];
 
@@ -133,22 +146,28 @@ export default function Results() {
   };
 
   const tabs: NavTab[] = [];
-  tabs.push({ id: 'schemes', labelKey: 'Schemes', icon: FileText });
+  tabs.push({ id: 'schemes', labelKey: 'results.tab_schemes', icon: FileText });
   if (seekerType === 'both' || seekerType === 'job') {
-    tabs.push({ id: 'jobs', labelKey: 'Jobs', icon: Briefcase });
+    tabs.push({ id: 'jobs', labelKey: 'results.tab_jobs', icon: Briefcase });
   }
   if (seekerType === 'both' || seekerType === 'housing') {
-    tabs.push({ id: 'housing', labelKey: 'Housing', icon: Building2 });
+    tabs.push({ id: 'housing', labelKey: 'results.tab_housing', icon: Building2 });
   }
-  tabs.push({ id: 'plan', labelKey: 'Plan', icon: LayoutList });
+  tabs.push({ id: 'plan', labelKey: 'results.tab_plan', icon: LayoutList });
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20 pt-4">
+      <div className="max-w-[600px] mx-auto px-4 pb-2 flex justify-end">
+        <LangSwitcher />
+      </div>
       <div className="max-w-[600px] mx-auto p-4 space-y-4">
         
         {activeTab === 'plan' && (
           <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-            <PlanSummaryCard />
+            <PlanSummaryCard
+              completed={Object.values(checklistState).filter(Boolean).length}
+              total={MOCK_PLAN.length}
+            />
             <div className="mt-6 space-y-3">
               <h3 className="font-semibold text-gray-900 mb-2">{t('results.next_steps', 'Next Steps')}</h3>
               {MOCK_PLAN.map(item => (
@@ -206,19 +225,141 @@ export default function Results() {
         onChange={setActiveTab} 
       />
 
-      <Drawer 
-        isOpen={!!drawerItem} 
+      <Drawer
+        isOpen={!!drawerItem}
         onClose={() => setDrawerItem(null)}
-        title={drawerItem ? `${drawerItem.type} Details` : ''}
+        title={drawerItem?.data?.name || drawerItem?.data?.title || `${drawerItem?.type} Details`}
       >
         {drawerItem && (
-          <div className="space-y-4">
-            <p className="text-gray-600">
-              {drawerItem.data.detail || drawerItem.data.benefitsSummary || "More details will be rendered here."}
-            </p>
-            <div className="bg-gray-50 p-4 rounded-lg text-sm font-mono text-gray-500 overflow-x-auto">
-              <pre>{JSON.stringify(drawerItem.data, null, 2)}</pre>
-            </div>
+          <div className="space-y-4 text-sm">
+            {drawerItem.type === 'Scheme' && (
+              <>
+                <div className="space-y-1">
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{t('results.drawer_benefit')}</p>
+                  <p className="text-gray-700">{drawerItem.data.benefit || drawerItem.data.benefitsSummary}</p>
+                </div>
+                {drawerItem.data.eligibilityCriteria?.length > 0 && (
+                  <div className="space-y-1">
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{t('results.drawer_eligibility')}</p>
+                    <ul className="list-disc list-inside space-y-0.5 text-gray-700">
+                      {drawerItem.data.eligibilityCriteria.map((c: string, i: number) => <li key={i}>{c}</li>)}
+                    </ul>
+                  </div>
+                )}
+                {drawerItem.data.howToApply && (
+                  <div className="space-y-1">
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{t('results.drawer_how_to_apply')}</p>
+                    <p className="text-gray-700">{drawerItem.data.howToApply}</p>
+                  </div>
+                )}
+                {drawerItem.data.sourceUrl && (
+                  <a href={drawerItem.data.sourceUrl} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-blue-600 underline text-xs pt-1">
+                    {drawerItem.data.sourceName || drawerItem.data.sourceUrl} ↗
+                  </a>
+                )}
+              </>
+            )}
+            {drawerItem.type === 'Job' && (
+              <>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-0.5">
+                    <p className="text-xs text-gray-500">{t('results.drawer_employer')}</p>
+                    <p className="font-medium">{drawerItem.data.employer}</p>
+                  </div>
+                  <div className="space-y-0.5">
+                    <p className="text-xs text-gray-500">{t('results.drawer_pay')}</p>
+                    <p className="font-medium">₹{drawerItem.data.payMin?.toLocaleString()} – ₹{drawerItem.data.payMax?.toLocaleString()}</p>
+                  </div>
+                  <div className="space-y-0.5">
+                    <p className="text-xs text-gray-500">{t('results.drawer_commute')}</p>
+                    <p className="font-medium">{drawerItem.data.commuteMinutes} min</p>
+                  </div>
+                  {drawerItem.data.schemeLink && (
+                    <div className="space-y-0.5">
+                      <p className="text-xs text-gray-500">{t('results.drawer_linked_scheme')}</p>
+                      <p className="font-medium">{drawerItem.data.schemeLink}</p>
+                    </div>
+                  )}
+                </div>
+                {drawerItem.data.requirements?.length > 0 && (
+                  <div className="space-y-1">
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{t('results.drawer_requirements')}</p>
+                    <ul className="list-disc list-inside space-y-0.5 text-gray-700">
+                      {drawerItem.data.requirements.map((r: string, i: number) => <li key={i}>{r}</li>)}
+                    </ul>
+                  </div>
+                )}
+                {drawerItem.data.perks && (
+                  <div className="space-y-1">
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{t('results.drawer_perks')}</p>
+                    <p className="text-gray-700">{drawerItem.data.perks}</p>
+                  </div>
+                )}
+                {drawerItem.data.howToApply && (
+                  <div className="space-y-1">
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{t('results.drawer_how_to_apply')}</p>
+                    <p className="text-gray-700">{drawerItem.data.howToApply}</p>
+                  </div>
+                )}
+                {drawerItem.data.sourceUrl && (
+                  <a href={drawerItem.data.sourceUrl} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-blue-600 underline text-xs pt-1">
+                    {drawerItem.data.sourceName || drawerItem.data.sourceUrl} ↗
+                  </a>
+                )}
+              </>
+            )}
+            {drawerItem.type === 'Housing' && (
+              <>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-0.5">
+                    <p className="text-xs text-gray-500">{t('results.drawer_area')}</p>
+                    <p className="font-medium">{drawerItem.data.area}</p>
+                  </div>
+                  <div className="space-y-0.5">
+                    <p className="text-xs text-gray-500">{t('results.drawer_occupancy')}</p>
+                    <p className="font-medium">{drawerItem.data.occupancy}</p>
+                  </div>
+                  <div className="space-y-0.5">
+                    <p className="text-xs text-gray-500">{t('results.drawer_price_from')}</p>
+                    <p className="font-medium">₹{drawerItem.data.priceMin?.toLocaleString()}/mo</p>
+                  </div>
+                  <div className="space-y-0.5">
+                    <p className="text-xs text-gray-500">{t('results.drawer_commute')}</p>
+                    <p className="font-medium">{drawerItem.data.commuteMinutes} min</p>
+                  </div>
+                </div>
+                {drawerItem.data.amenities?.length > 0 && (
+                  <div className="space-y-1">
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{t('results.drawer_amenities')}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {drawerItem.data.amenities.map((a: string, i: number) => (
+                        <span key={i} className="bg-gray-100 text-gray-700 rounded px-2 py-0.5 text-xs">{a}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {drawerItem.data.deposit && (
+                  <div className="space-y-1">
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{t('results.drawer_deposit')}</p>
+                    <p className="text-gray-700">{drawerItem.data.deposit}</p>
+                  </div>
+                )}
+                {drawerItem.data.contact && (
+                  <div className="space-y-1">
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{t('results.drawer_contact')}</p>
+                    <p className="text-gray-700">{drawerItem.data.contact}</p>
+                  </div>
+                )}
+                {drawerItem.data.sourceUrl && (
+                  <a href={drawerItem.data.sourceUrl} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-blue-600 underline text-xs pt-1">
+                    {drawerItem.data.sourceName || drawerItem.data.sourceUrl} ↗
+                  </a>
+                )}
+              </>
+            )}
           </div>
         )}
       </Drawer>
