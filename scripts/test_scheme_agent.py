@@ -17,7 +17,7 @@ SEED = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
 
 RAVI = {
     "seeker_type": "both", "age": 28, "gender": "male",
-    "origin_state": "BR", "current_city": "Bengaluru",
+    "origin_state": "Bihar", "current_city": "Bengaluru",
     "sector": "driving", "skills": ["driving", "basic mechanical"],
     "education": "class10", "worker_band": 2,
     "employment_status": "unemployed", "aadhaar_available": True,
@@ -27,7 +27,7 @@ RAVI = {
 
 PRIYA = {
     "seeker_type": "both", "age": 23, "gender": "female",
-    "origin_state": "TS", "current_city": "Bengaluru",
+    "origin_state": "Telangana", "current_city": "Bengaluru",
     "sector": "bpo", "skills": ["customer support", "Excel", "typing"],
     "education": "grad", "worker_band": 4,
     "employment_status": "unemployed", "aadhaar_available": True,

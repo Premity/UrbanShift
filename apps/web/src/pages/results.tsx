@@ -11,7 +11,7 @@ import {
 } from '../components/results/Cards';
 import { FilteredOutPanel, FilteredOutItem } from '../components/results/FilteredOutPanel';
 import { Drawer } from '../components/shared/Drawer';
-import { LangSwitcher } from '../components/shared/LangSwitcher';
+import { Header } from '../components/shared/Header';
 import { useTranslation } from 'react-i18next';
 
 // ── Strip markdown to plain text for display ────────────────────────────────
@@ -276,10 +276,8 @@ export default function Results() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20 pt-4">
-      <div className="max-w-[600px] mx-auto px-4 pb-2 flex justify-end">
-        <LangSwitcher />
-      </div>
+    <div className="min-h-screen bg-gray-50 pb-20">
+      <Header />
       <div className="max-w-[600px] mx-auto p-4 space-y-4">
 
         {activeTab === 'plan' && (

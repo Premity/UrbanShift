@@ -141,7 +141,7 @@
     "seeker_type": "Looking for",
     "age": "Age",
     "gender": "Gender",
-    "origin_state": "Home state",
+    "origin_state": "Home State/UT",
     "native_lang": "Native language",
     "migrant_status": "Migration status",
     "long_term": "Long-term resident",
@@ -166,5 +166,21 @@
     "submitting": "Saving…",
     "validation_error": "Please check the highlighted fields.",
     "comma_separated": "comma-separated"
+  },
+  "resume": {
+    "cta_title": "Have a resume? Upload it to save time",
+    "cta_subtitle": "We'll pre-fill your profile automatically (PDF or DOCX, max 5 MB)",
+    "upload_btn": "Upload resume",
+    "skip_btn": "Continue without resume",
+    "drop_hint": "Drag & drop your PDF or DOCX here",
+    "browse": "Browse files",
+    "size_limit": "Max 5 MB · PDF or DOCX",
+    "uploading": "Reading your resume…",
+    "success": "Profile pre-filled from your resume!",
+    "missing_fields_banner": "Some details couldn't be read — please fill in the highlighted fields below.",
+    "error_parse": "Couldn't read this file. Please continue manually.",
+    "error_too_large": "File is too large (max 5 MB). Please try a smaller file.",
+    "error_unsupported_type": "Only PDF and DOCX files are supported.",
+    "error_no_text": "No text found in the file. Please continue manually."
   }
 }

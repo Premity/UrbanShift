@@ -34,10 +34,13 @@ BENGALURU_AREAS = [
 # ── Indian States (ISO codes for origin_state) ──────────
 
 INDIAN_STATES = [
-    "AN", "AP", "AR", "AS", "BR", "CG", "CH", "DD", "DL", "GA",
-    "GJ", "HP", "HR", "JH", "JK", "KA", "KL", "LA", "LD", "MH",
-    "ML", "MN", "MP", "MZ", "NL", "OD", "PB", "PY", "RJ", "SK",
-    "TN", "TR", "TS", "UK", "UP", "WB",
+    "Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", 
+    "Bihar", "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", 
+    "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", 
+    "Jharkhand", "Karnataka", "Kerala", "Ladakh", "Lakshadweep", "Madhya Pradesh", 
+    "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Puducherry", 
+    "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", 
+    "Uttar Pradesh", "Uttarakhand", "West Bengal"
 ]
 
 # ── Languages ────────────────────────────────────────────
@@ -80,9 +83,9 @@ TURN_SEQUENCE: list[dict[str, Any]] = [
         "turn": TurnDefinition(
             field="origin_state",
             prompt_i18n={
-                "en": "Which state are you from? And what's your current situation — just moved, planning to move, or been here a while?",
-                "hi": "आप किस राज्य से हैं? और आपकी वर्तमान स्थिति क्या है — अभी आए हैं, आने की योजना है, या काफी समय से यहाँ हैं?",
-                "kn": "ನೀವು ಯಾವ ರಾಜ್ಯದಿಂದ ಬಂದಿದ್ದೀರಿ? ಮತ್ತು ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಪರಿಸ್ಥಿತಿ ಏನು — ಈಗಷ್ಟೇ ಬಂದಿದ್ದೀರಾ, ಬರಲು ಯೋಜಿಸುತ್ತಿದ್ದೀರಾ, ಅಥವಾ ಬಹಳ ಸಮಯದಿಂದ ಇಲ್ಲಿ ಇದ್ದೀರಾ?",
+                "en": "Which state or union territory are you from? And what's your current situation — just moved, planning to move, or been here a while?",
+                "hi": "आप किस राज्य या केंद्र शासित प्रदेश से हैं? और आपकी वर्तमान स्थिति क्या है — अभी आए हैं, आने की योजना है, या काफी समय से यहाँ हैं?",
+                "kn": "ನೀವು ಯಾವ ರಾಜ್ಯ ಅಥವಾ ಕೇಂದ್ರಾಡಳಿತ ಪ್ರದೇಶದಿಂದ ಬಂದಿದ್ದೀರಿ? ಮತ್ತು ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಪರಿಸ್ಥಿತಿ ಏನು — ಈಗಷ್ಟೇ ಬಂದಿದ್ದೀರಾ, ಬರಲು ಯೋಜಿಸುತ್ತಿದ್ದೀರಾ, ಅಥವಾ ಬಹಳ ಸಮಯದಿಂದ ಇಲ್ಲಿ ಇದ್ದೀರಾ?",
             },
             input_type="chips",
             options=INDIAN_STATES,
