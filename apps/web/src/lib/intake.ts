@@ -88,3 +88,25 @@ export async function saveProfile(payload: ProfilePayload): Promise<{ session_id
     profile_json: payload,
   });
 }
+
+export interface ResumeParseResponse {
+  profile: Partial<ProfilePayload>;
+  missing_fields: string[];
+  parsed_ok: boolean;
+}
+
+export async function parseResume(file: File): Promise<ResumeParseResponse> {
+  const form = new FormData();
+  form.append("file", file);
+  const res = await fetch(`${API_BASE}/api/resume/parse`, {
+    method: "POST",
+    credentials: "include",
+    body: form,
+    // Note: do NOT set Content-Type — browser sets it with the boundary automatically
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`${res.status}: ${text}`);
+  }
+  return res.json() as Promise<ResumeParseResponse>;
+}

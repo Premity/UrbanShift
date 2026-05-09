@@ -59,7 +59,7 @@ if __name__ == "__main__":
     # ── Test 1: Ravi (band 2, seeker_type=both) ──────────────
     ok1 = run_intake("Ravi (both)", "both", [
         {"field": "native_lang", "value": {"native_lang": "hi", "languages_spoken": ["hi", "en"]}},
-        {"field": "origin_state", "value": {"origin_state": "BR", "migrant_status": "just_moved"}},
+        {"field": "origin_state", "value": {"origin_state": "Bihar", "migrant_status": "just_moved"}},
         {"field": "age", "value": {"age": 28, "gender": "male"}},
         {"field": "sector", "value": {"sector": "driving", "skills": ["driving", "basic mechanical"]}},
         {"field": "education", "value": {"education": "class10", "years_experience": 5}},
@@ -71,7 +71,7 @@ if __name__ == "__main__":
     # ── Test 2: Ravi (band 2, seeker_type=job — skip housing) ─
     ok2 = run_intake("Ravi (job-only)", "job", [
         {"field": "native_lang", "value": {"native_lang": "hi", "languages_spoken": ["hi"]}},
-        {"field": "origin_state", "value": {"origin_state": "BR", "migrant_status": "just_moved"}},
+        {"field": "origin_state", "value": {"origin_state": "Bihar", "migrant_status": "just_moved"}},
         {"field": "age", "value": {"age": 28, "gender": "male"}},
         {"field": "sector", "value": {"sector": "driving", "skills": ["driving"]}},
         {"field": "education", "value": {"education": "class10", "years_experience": 5}},
@@ -82,7 +82,7 @@ if __name__ == "__main__":
     # ── Test 3: Priya (band 4, seeker_type=both) ─────────────
     ok3 = run_intake("Priya (both)", "both", [
         {"field": "native_lang", "value": {"native_lang": "te", "languages_spoken": ["te", "en", "hi"]}},
-        {"field": "origin_state", "value": {"origin_state": "TS", "migrant_status": "planning"}},
+        {"field": "origin_state", "value": {"origin_state": "Telangana", "migrant_status": "planning"}},
         {"field": "age", "value": {"age": 23, "gender": "female"}},
         {"field": "sector", "value": {"sector": "bpo", "skills": ["customer support", "Excel", "typing"]}},
         {"field": "education", "value": {"education": "grad", "years_experience": 0}},
