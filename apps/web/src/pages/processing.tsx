@@ -126,6 +126,11 @@ export default function ProcessingPage() {
                   navigate("/results", { state: { plan: data.plan, profile } });
                   return;
                 }
+                if (data.type === "error") {
+                  resetStallTimer();
+                  setError(data.message || t("processing.error", "Something went wrong. Please try again."));
+                  return;
+                }
                 if (data.type === "done") {
                   resetStallTimer();
                   return;

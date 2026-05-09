@@ -98,7 +98,10 @@ async def orchestrator_entry_node(state: dict[str, Any]) -> dict[str, Any]:
     return {
         "profile": profile,
         "seeker_type": seeker_type,
-        "agent_steps": [_make_step_event("orchestrator", "complete")],
+        "agent_steps": [
+            _make_step_event("orchestrator", "running"),
+            _make_step_event("orchestrator", "complete"),
+        ],
     }
 
 
@@ -233,11 +236,14 @@ async def orchestrator_merge_node(state: dict[str, Any]) -> dict[str, Any]:
     # Return only CHANGED keys — agent_steps uses operator.add reducer.
     return {
         "plan": plan,
-        "agent_steps": [_make_step_event(
-            "merge", "complete",
-            schemes_count=len(schemes),
-            jobs_count=len(jobs),
-            housing_count=len(housing),
-            filtered_count=len(filtered_out),
-        )],
+        "agent_steps": [
+            _make_step_event("merge", "running"),
+            _make_step_event(
+                "merge", "complete",
+                schemes_count=len(schemes),
+                jobs_count=len(jobs),
+                housing_count=len(housing),
+                filtered_count=len(filtered_out),
+            ),
+        ],
     }

@@ -202,12 +202,12 @@ async def housing_agent_node(state: dict[str, Any]) -> dict[str, Any]:
     job_out: list[dict] = state.get("job_out", [])
     errors: list[str] = list(state.get("errors", []))
 
-    budget = profile.get("budget")
+    budget = profile.get("budget") or profile.get("budget_inr")
     gender = profile.get("gender")
     occupancy_pref = profile.get("occupancy_pref")
 
     if not budget:
-        errors.append("housing_agent: profile missing 'budget' — skipping housing search")
+        errors.append("housing_agent: profile missing 'budget' or 'budget_inr' — skipping housing search")
         return {**state, "housing_out": [], "errors": errors}
 
     try:

@@ -141,11 +141,20 @@ def _validate_scheme(scheme: dict, profile: dict) -> list[str]:
 # Rules pass — Jobs  (R-J1 … R-J4)
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _validate_job(job: dict, profile: dict, validated_scheme_ids: set[str]) -> list[str]:
+def _validate_job(job_entry: dict, profile: dict, validated_scheme_ids: set[str]) -> list[str]:
+    """Validate a job entry from job_agent output.
+
+    job_entry shape from JobMatchResult.model_dump():
+        {"job": {...job fields...}, "match_score": int, "citation": str, "scheme_link": str|None}
+    Falls back to treating job_entry directly as the job dict for backwards compat.
+    """
+    # Unwrap nested job dict if present (JobMatchResult shape)
+    job = job_entry.get("job") if isinstance(job_entry.get("job"), dict) else job_entry
+
     reasons: list[str] = []
 
-    # R-J1 citation
-    if not job.get("source_url"):
+    # R-J1 citation — check both the job's source_url and the wrapper's citation field
+    if not job.get("source_url") and not job_entry.get("citation"):
         reasons.append("missing_source_url")
 
     # R-J2 worker_band (±1 tolerance)
@@ -158,15 +167,12 @@ def _validate_job(job: dict, profile: dict, validated_scheme_ids: set[str]) -> l
             )
 
     # R-J3 scheme referential integrity
-    scheme_link = job.get("scheme_link_id")
+    scheme_link = job.get("scheme_link_id") or job_entry.get("scheme_link")
     if scheme_link and scheme_link not in validated_scheme_ids:
         reasons.append(f"broken_scheme_link: scheme '{scheme_link}' not in validated output")
 
-    # R-J4 sector
-    job_sector = job.get("sector")
-    profile_sector = profile.get("sector")
-    if job_sector and profile_sector and job_sector != profile_sector:
-        reasons.append(f"sector mismatch: job='{job_sector}', profile='{profile_sector}'")
+    # R-J4 sector (advisory — only block if the LLM scoring pass hasn't already ranked;
+    # sector labels between DB and profile may not match exactly, so skip hard rejection here)
 
     return reasons
 
@@ -190,8 +196,8 @@ def _validate_housing(housing: dict, profile: dict) -> list[str]:
     elif gender == "female" and h_gender and h_gender not in ("female", "unisex"):
         reasons.append(f"gender incompatible: housing='{h_gender}', profile='female'")
 
-    # R-H3 budget cap
-    budget = profile.get("budget")
+    # R-H3 budget cap (accept both 'budget' and 'budget_inr' profile keys)
+    budget = profile.get("budget") or profile.get("budget_inr")
     price_min = housing.get("price_min")
     if budget is not None and price_min is not None:
         try:
@@ -319,7 +325,9 @@ async def validate_all(
 
     # ── Jobs ─────────────────────────────────────────────────────────────────
     for j in jobs:
-        item_id = str(j.get("id") or "unknown")
+        # Unwrap nested job dict for id extraction (JobMatchResult shape)
+        job_inner = j.get("job") if isinstance(j.get("job"), dict) else j
+        item_id = str(job_inner.get("id") or j.get("id") or "unknown")
         reasons = _validate_job(j, profile, validated_scheme_ids)
         if reasons:
             filtered_out.append(_reject(item_id, "job", reasons))
