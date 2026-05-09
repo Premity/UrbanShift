@@ -8,6 +8,7 @@ from routes.profile import router as profile_router
 from routes.intake import router as intake_router
 from routes.schemes import router as schemes_router
 from routes.run import router as run_router
+from routes.resume import router as resume_router
 
 app = FastAPI(
     title="UrbanShift API",
@@ -29,6 +30,7 @@ app.include_router(profile_router)
 app.include_router(intake_router)
 app.include_router(schemes_router)
 app.include_router(run_router)
+app.include_router(resume_router)
 
 
 @app.get("/api/health")

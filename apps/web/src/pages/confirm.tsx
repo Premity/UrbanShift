@@ -215,6 +215,16 @@ function langNameToCode(name: string): string {
 
 // ── Helpers: map raw profile JSON → typed ProfilePayload ─
 
+const INDIAN_STATES = [
+  "Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", 
+  "Bihar", "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", 
+  "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", 
+  "Jharkhand", "Karnataka", "Kerala", "Ladakh", "Lakshadweep", "Madhya Pradesh", 
+  "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Puducherry", 
+  "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", 
+  "Uttar Pradesh", "Uttarakhand", "West Bengal"
+];
+
 function rawToPayload(raw: Record<string, unknown>): ProfilePayload {
   return {
     seeker_type: (raw.seeker_type as ProfilePayload["seeker_type"]) ?? "both",
@@ -252,6 +262,7 @@ export default function ConfirmPage() {
   const reducedMotion = useReducedMotion();
 
   const rawProfile = (location.state as { profile?: Record<string, unknown> })?.profile ?? {};
+  const resumeMissingFields: string[] = (location.state as { resumeMissingFields?: string[] })?.resumeMissingFields ?? [];
 
   const {
     control,
@@ -305,6 +316,16 @@ export default function ConfirmPage() {
             <h1 className="text-2xl font-bold text-foreground">{t("confirm.title")}</h1>
             <p className="text-sm text-muted-foreground mt-1">{t("confirm.subtitle")}</p>
           </div>
+
+          {/* Resume missing fields banner */}
+          {resumeMissingFields.length > 0 && (
+            <div role="alert" className="flex items-start gap-3 rounded-xl border border-amber-400/40 bg-amber-400/10 px-4 py-3">
+              <span className="text-amber-500 text-lg leading-none mt-0.5" aria-hidden="true">⚠</span>
+              <p className="text-sm text-amber-700 dark:text-amber-400">
+                {t("resume.missing_fields_banner")}
+              </p>
+            </div>
+          )}
 
           <form id="confirm-form" onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
 
@@ -373,12 +394,15 @@ export default function ConfirmPage() {
                   name="origin_state"
                   control={control}
                   render={({ field }) => (
-                    <TextField
+                    <SelectField
                       id="confirm-origin_state"
                       label={t("confirm.origin_state")}
                       value={field.value}
                       onChange={field.onChange}
-                      placeholder="e.g. Bihar, UP"
+                      options={[
+                        { value: "", label: "Select state/UT..." },
+                        ...INDIAN_STATES.map((st) => ({ value: st, label: st })),
+                      ]}
                     />
                   )}
                 />

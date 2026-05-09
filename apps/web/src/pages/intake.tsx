@@ -6,7 +6,9 @@ import { Briefcase, Home, Sparkles, Loader2 } from "lucide-react";
 import { Header } from "../components/shared/Header";
 import { ChatTurn } from "../components/intake/ChatTurn";
 import { TurnInputRenderer } from "../components/intake/TurnInputRenderer";
-import { sendTurn, startSession, type Turn, type TurnResponse } from "../lib/intake";
+import { ResumeUploader } from "../components/intake/ResumeUploader";
+import { sendTurn, startSession, type Turn, type TurnResponse, type ResumeParseResponse } from "../lib/intake";
+
 
 // Multi-field turns: the API turn `field` is the primary key,
 // but the answer value must be a dict with all sibling fields.
@@ -81,6 +83,7 @@ export default function IntakePage() {
 
   const [sessionReady, setSessionReady] = useState(false);
   const [seekerType, setSeekerType] = useState<string | null>(null);
+  const [showResumePrompt, setShowResumePrompt] = useState(false);
   const [currentTurn, setCurrentTurn] = useState<Turn | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const msgCounter = useRef(0);
@@ -122,6 +125,17 @@ export default function IntakePage() {
   async function handleSeekerSelect(type: "job" | "housing" | "both") {
     setSeekerType(type);
     addUserMessage(type, "seeker_type");
+
+    // For job/both seekers: ask about resume before starting chat turns
+    if (type === "job" || type === "both") {
+      // Send the seeker_type turn to the backend in the background so
+      // the session is primed; we'll show the resume prompt next.
+      sendTurn({ field: "seeker_type", value: type }).catch(console.error);
+      setShowResumePrompt(true);
+      return;
+    }
+
+    // housing-only: skip resume prompt, go straight to chat
     setLoading(true);
     try {
       const res = await sendTurn({ field: "seeker_type", value: type });
@@ -132,6 +146,38 @@ export default function IntakePage() {
       setLoading(false);
     }
   }
+
+  function handleResumeParsed(result: ResumeParseResponse) {
+    // Navigate directly to the Confirm screen with parsed fields + metadata
+    navigate("/intake/confirm", {
+      state: {
+        profile: {
+          seeker_type: seekerType,
+          current_city: "Bengaluru",
+          ...result.profile,
+        },
+        resumeMissingFields: result.missing_fields,
+      },
+    });
+  }
+
+  async function handleResumeSkip() {
+    // Continue with normal chat turn flow
+    setShowResumePrompt(false);
+    setLoading(true);
+    try {
+      // Request the first turn (seeker_type already sent, so backend will
+      // return the next question directly)
+      const res = await sendTurn(undefined);
+      handleTurnResponse(res);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+
 
   function handleTurnResponse(res: TurnResponse) {
     if (res.complete) {
@@ -225,10 +271,14 @@ export default function IntakePage() {
               const parts = Object.entries(value as Record<string, unknown>)
                 .filter(([_, v]) => v !== null && v !== "" && !(Array.isArray(v) && (v as unknown[]).length === 0))
                 .map(([k, v]) => {
-                  if (Array.isArray(v) && v.length === 2 && typeof v[0] === "number")
-                    return `${t(`confirm.${k}`, k)}: ₹${(v[0] as number).toLocaleString()} – ₹${(v[1] as number).toLocaleString()}`;
-                  if (typeof v === "number")
-                    return `${t(`confirm.${k}`, k)}: ₹${v.toLocaleString()}`;
+                  if (Array.isArray(v) && v.length === 2 && typeof v[0] === "number") {
+                    const prefix = k.endsWith("_inr") ? "₹" : "";
+                    return `${t(`confirm.${k}`, k)}: ${prefix}${(v[0] as number).toLocaleString()} – ${prefix}${(v[1] as number).toLocaleString()}`;
+                  }
+                  if (typeof v === "number") {
+                    const prefix = k.endsWith("_inr") ? "₹" : "";
+                    return `${t(`confirm.${k}`, k)}: ${prefix}${v.toLocaleString()}`;
+                  }
                   if (Array.isArray(v))
                     return `${t(`confirm.${k}`, k)}: ${(v as string[]).map(x => t(`intake.options.${x}`, x)).join(", ")}`;
                   return `${t(`confirm.${k}`, k)}: ${t(`intake.options.${String(v)}`, String(v))}`;
@@ -268,7 +318,13 @@ export default function IntakePage() {
           {sessionReady && !seekerType && (
             <SeekerSelect onSelect={handleSeekerSelect} />
           )}
-          {currentTurn && !loading && (
+          {showResumePrompt && (
+            <ResumeUploader
+              onParsed={handleResumeParsed}
+              onSkip={handleResumeSkip}
+            />
+          )}
+          {currentTurn && !loading && !showResumePrompt && (
             <TurnInputRenderer
               turn={currentTurn}
               onSubmit={handleAnswer}
@@ -277,6 +333,7 @@ export default function IntakePage() {
           )}
         </div>
       </div>
+
     </div>
   );
 }
