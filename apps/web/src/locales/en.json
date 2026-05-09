@@ -164,6 +164,7 @@
     "preferred_areas": "Preferred areas",
     "retry": "Retry",
     "submitting": "Saving…",
-    "validation_error": "Please check the highlighted fields."
+    "validation_error": "Please check the highlighted fields.",
+    "comma_separated": "comma-separated"
   }
 }
