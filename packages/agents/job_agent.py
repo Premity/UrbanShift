@@ -226,41 +226,81 @@ async def score_match(
 
 
 def _heuristic_score(job_dict: dict[str, Any], profile: dict[str, Any]) -> dict[str, Any]:
-    """Deterministic fallback scoring when LLM is unavailable."""
-    score = 50  # base
+    """Deterministic fallback scoring when LLM is unavailable.
 
-    # Band proximity (±0 = +20, ±1 = +10, else +0)
-    job_band = job_dict.get("worker_band") or 2
+    Aims for varied output across jobs: a security guard with no required_skills
+    listed should not score the same as a driving role for a driver-profile.
+    """
+    score = 40  # base — leave room for positives without saturating
+    reason_parts: list[str] = []
+
+    # Band proximity (±0 = +18, ±1 = +8, ±2+ = -10)
     profile_band = profile.get("worker_band", 2)
+    raw_band = job_dict.get("worker_band")
+    job_band = raw_band if raw_band is not None else profile_band  # unknown => no penalty
     band_diff = abs(job_band - profile_band)
-    if band_diff == 0:
-        score += 20
+    if raw_band is None:
+        score += 4
+        reason_parts.append("band unknown — assumed match")
+    elif band_diff == 0:
+        score += 18
+        reason_parts.append("exact band match")
     elif band_diff == 1:
-        score += 10
+        score += 8
+        reason_parts.append("adjacent band")
+    else:
+        score -= 10
+        reason_parts.append(f"band gap {band_diff}")
 
-    # Skill keyword overlap
-    job_skills = set(s.lower() for s in (job_dict.get("required_skills") or []))
-    profile_skills = set(s.lower() for s in (profile.get("skills") or []))
-    if job_skills and profile_skills:
-        overlap = len(job_skills & profile_skills)
-        score += min(15, overlap * 5)
+    # Sector match (or close kin via title text)
+    job_sector = (job_dict.get("sector") or "").lower()
+    profile_sector = (profile.get("sector") or "").lower()
+    title_lower = (job_dict.get("title") or "").lower()
+    if job_sector and profile_sector and job_sector == profile_sector:
+        score += 18
+        reason_parts.append(f"sector match: {profile_sector}")
+    elif profile_sector and profile_sector in title_lower:
+        score += 12
+        reason_parts.append(f"title mentions {profile_sector}")
 
-    # Sector match
-    if (job_dict.get("sector") or "").lower() == (profile.get("sector") or "").lower():
-        score += 10
+    # Skill overlap — explicit required_skills, or fallback to title keyword scan
+    job_skills = {s.lower() for s in (job_dict.get("required_skills") or [])}
+    profile_skills = {s.lower() for s in (profile.get("skills") or [])}
+    overlap = job_skills & profile_skills
+    if overlap:
+        score += min(15, len(overlap) * 5)
+        reason_parts.append(f"skill overlap: {', '.join(sorted(overlap))}")
+    elif profile_skills and title_lower:
+        title_hits = {sk for sk in profile_skills if sk and sk in title_lower}
+        if title_hits:
+            score += min(8, len(title_hits) * 4)
+            reason_parts.append(f"title matches skill: {', '.join(sorted(title_hits))}")
 
     # Area match
-    preferred = set(a.lower() for a in (profile.get("preferred_areas") or []))
+    preferred = {a.lower() for a in (profile.get("preferred_areas") or [])}
     if preferred and (job_dict.get("area") or "").lower() in preferred:
         score += 5
+        reason_parts.append("preferred area")
 
-    reason_parts = []
-    if band_diff == 0:
-        reason_parts.append("exact band match")
-    if job_skills & profile_skills:
-        reason_parts.append(f"skill overlap: {', '.join(job_skills & profile_skills)}")
+    # Pay sanity vs. profile income range (lower bound)
+    pay_min = job_dict.get("pay_min")
+    income_range = profile.get("income_range_inr")
+    if pay_min and isinstance(income_range, (list, tuple)) and income_range:
+        target = income_range[0] or 0
+        if target and pay_min >= target:
+            score += 4
+            reason_parts.append("pay meets target")
+        elif target and pay_min < target * 0.7:
+            score -= 6
+            reason_parts.append("pay below target")
+
+    # Scheme-linked jobs are higher confidence
+    if job_dict.get("scheme_link_id"):
+        score += 3
+        reason_parts.append("scheme-linked")
+
     if not reason_parts:
-        reason_parts.append("general match based on profile")
+        reason_parts.append("baseline profile fit")
 
     return {
         "score": max(0, min(100, score)),

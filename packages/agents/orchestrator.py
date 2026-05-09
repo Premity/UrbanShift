@@ -107,15 +107,26 @@ async def orchestrator_entry_node(state: dict[str, Any]) -> dict[str, Any]:
 
 # ── Merge Node ──────────────────────────────────────────────────────────────
 
+_MAX_CHECKLIST_PER_CATEGORY = 3
+
+
 def _build_checklist(
     schemes: list[dict], jobs: list[dict], housing: list[dict]
 ) -> list[dict[str, Any]]:
-    """Build a human-readable checklist of next steps from validated items."""
+    """Build a human-readable checklist of next steps from validated items.
+
+    Caps each category so the checklist stays focused (top items only).
+    """
     checklist: list[dict[str, Any]] = []
     step = 1
 
-    # Scheme steps
-    for s in schemes:
+    # Scheme steps — skip near-miss ineligibles (they're not actionable yet)
+    eligible_schemes = [
+        s for s in schemes
+        if not (isinstance(s.get("eligibility_status"), dict)
+                and s["eligibility_status"].get("eligible") is False)
+    ]
+    for s in eligible_schemes[:_MAX_CHECKLIST_PER_CATEGORY]:
         name = s.get("scheme_name") or s.get("name") or s.get("scheme_id", "Unknown scheme")
         apply_link = s.get("apply_link") or s.get("citation") or ""
         checklist.append({
@@ -128,7 +139,7 @@ def _build_checklist(
         step += 1
 
     # Job steps
-    for j in jobs:
+    for j in jobs[:_MAX_CHECKLIST_PER_CATEGORY]:
         job_data = j.get("job", j)
         title = job_data.get("title", "Job opportunity")
         employer = job_data.get("employer") or "employer"
@@ -143,7 +154,7 @@ def _build_checklist(
         step += 1
 
     # Housing steps
-    for h in housing:
+    for h in housing[:_MAX_CHECKLIST_PER_CATEGORY]:
         name = h.get("name", "Housing option")
         area = h.get("area", "")
         source_url = h.get("source_url", "")

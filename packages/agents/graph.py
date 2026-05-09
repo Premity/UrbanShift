@@ -39,6 +39,7 @@ class AgentState(TypedDict, total=False):
     profile: dict                                          # user profile dict
     seeker_type: str                                       # "job" | "housing" | "both"
     scheme_out: list[dict]                                 # scheme agent output
+    all_scheme_ids: list[str]                              # IDs of every scheme row in DB (for ref-int checks)
     job_out: list[dict]                                    # job agent output
     housing_out: list[dict]                                # housing agent output
     validator_out: dict                                    # {validated, filtered_out}
@@ -116,9 +117,11 @@ async def _scheme_node(state: AgentState) -> dict[str, Any]:
     )
 
     schemes = agent_result.get("schemes", [])
+    all_scheme_ids = [str(s["id"]) for s in all_schemes if s.get("id")]
 
     return {
         "scheme_out": schemes,
+        "all_scheme_ids": all_scheme_ids,
         "agent_steps": [
             _step_event("scheme", "running"),
             _step_event("scheme", "complete", items_count=len(schemes)),

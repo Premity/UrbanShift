@@ -59,7 +59,7 @@ interface BackendScheme {
   source_url?: string;
   source_name?: string;
   apply_link?: string;
-  eligibility_status?: { eligible: boolean; reason?: string };
+  eligibility_status?: { eligible: boolean; reasons?: string[]; reason?: string };
   docs_required?: string[];
   level?: string;
   category?: string[];
@@ -123,8 +123,17 @@ interface BackendFilteredOut {
 
 function adaptScheme(s: BackendScheme, idx: number) {
   const eligStatus = s.eligibility_status;
+  // Default to 'check' for safety: only mark eligible when backend explicitly says so.
   let eligibilityStatus: 'eligible' | 'check' | 'ineligible' = 'eligible';
-  if (eligStatus && !eligStatus.eligible) eligibilityStatus = 'ineligible';
+  let eligibilityReasons: string[] = [];
+  if (eligStatus) {
+    if (eligStatus.eligible) {
+      eligibilityStatus = 'eligible';
+    } else {
+      eligibilityStatus = 'check';
+      eligibilityReasons = eligStatus.reasons || (eligStatus.reason ? [eligStatus.reason] : []);
+    }
+  }
 
   const rawBenefits = s.top_benefits || s.benefits_summary || '';
   const benefitsSummary = stripMarkdown(rawBenefits);
@@ -134,6 +143,7 @@ function adaptScheme(s: BackendScheme, idx: number) {
     id: s.scheme_id || s.id || `s${idx}`,
     name: s.scheme_name || s.name || 'Unknown scheme',
     eligibilityStatus,
+    eligibilityReasons,
     benefitsSummary,
     sourceUrl,
     sourceName: s.source_name || (sourceUrl ? domainLabel(sourceUrl) : ''),
@@ -356,6 +366,16 @@ export default function Results() {
           <div className="space-y-4 text-sm">
             {drawerItem.type === 'Scheme' && (
               <>
+                {drawerItem.data.eligibilityStatus !== 'eligible' && drawerItem.data.eligibilityReasons?.length > 0 && (
+                  <div className="space-y-1 rounded-lg border border-yellow-200 bg-yellow-50 p-3">
+                    <p className="text-xs font-semibold text-yellow-800 uppercase tracking-wide">
+                      {t('results.drawer_why_not_eligible', 'Why this needs review')}
+                    </p>
+                    <ul className="list-disc list-inside space-y-0.5 text-yellow-900 text-xs">
+                      {drawerItem.data.eligibilityReasons.map((r: string, i: number) => <li key={i}>{r}</li>)}
+                    </ul>
+                  </div>
+                )}
                 <div className="space-y-1">
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{t('results.drawer_benefit')}</p>
                   <p className="text-gray-700">{drawerItem.data.benefit || drawerItem.data.benefitsSummary}</p>

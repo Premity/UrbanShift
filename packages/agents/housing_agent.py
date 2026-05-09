@@ -37,7 +37,7 @@ def _get_factory() -> async_sessionmaker:
 # ---------------------------------------------------------------------------
 
 _EARTH_KM = 6371.0
-_MIN_PER_KM = 3.0
+_MIN_PER_KM = 4.0
 
 
 def _haversine_km(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
@@ -50,7 +50,7 @@ def _haversine_km(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
 
 
 def compute_commute(housing_lat: float, housing_lng: float, job_lat: float, job_lng: float) -> float:
-    """Return estimated commute in minutes using Haversine × 3 min/km."""
+    """Return estimated commute in minutes using Haversine × 4 min/km."""
     return round(_haversine_km(housing_lat, housing_lng, job_lat, job_lng) * _MIN_PER_KM, 1)
 
 
@@ -148,12 +148,22 @@ def filter_by_commute(
 
     Filters out housing that doesn't match occupancy_pref when explicitly set.
     """
-    # Optional occupancy filter
+    # Optional occupancy filter.
+    # Accept either an exact occupancy match, a None value (no preference recorded),
+    # or — for the user-facing "shared" option — any multi-occupancy listing.
     if occupancy_pref:
-        housing_options = [
-            h for h in housing_options
-            if h.get("occupancy") is None or h.get("occupancy") == occupancy_pref
-        ]
+        if occupancy_pref == "shared":
+            allowed = {"double", "triple", "dorm", "shared"}
+        elif occupancy_pref == "any":
+            allowed = None  # accept all
+        else:
+            allowed = {occupancy_pref}
+
+        if allowed is not None:
+            housing_options = [
+                h for h in housing_options
+                if h.get("occupancy") is None or h.get("occupancy") in allowed
+            ]
 
     enriched: list[dict] = []
     for h in housing_options:

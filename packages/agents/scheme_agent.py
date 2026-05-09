@@ -24,6 +24,8 @@ logger = logging.getLogger(__name__)
 
 # Max eligible schemes to return
 MAX_RESULTS = 8
+# Max ineligible schemes to surface (so users can see "almost matches")
+MAX_INELIGIBLE = 3
 
 
 async def run_scheme_agent(
@@ -94,6 +96,12 @@ async def run_scheme_agent(
     final_schemes: list[dict[str, Any]] = []
     for entry, scheme in eligible_results[:MAX_RESULTS]:
         entry["top_benefits"] = explain_benefits(scheme, profile)
+        final_schemes.append(entry)
+
+    # Step 5: Surface a few near-miss ineligibles so users can see what to fix.
+    # These are returned with eligibility_status.eligible == False and the
+    # `reasons` list explaining what's missing.
+    for entry in ineligible_results[:MAX_INELIGIBLE]:
         final_schemes.append(entry)
 
     return {

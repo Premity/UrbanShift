@@ -16,8 +16,8 @@ export function EligibilityBadge({ status }: { status: 'eligible' | 'check' | 'i
   };
   const labels = {
     eligible: "eligible",
-    check: "check_req",
-    ineligible: "not_eligible",
+    check: "check",
+    ineligible: "ineligible",
   };
   const Icon = icons[status];
   
