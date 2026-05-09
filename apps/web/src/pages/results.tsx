@@ -14,6 +14,29 @@ import { Drawer } from '../components/shared/Drawer';
 import { LangSwitcher } from '../components/shared/LangSwitcher';
 import { useTranslation } from 'react-i18next';
 
+// ── Strip markdown to plain text for display ────────────────────────────────
+
+function stripMarkdown(md: string): string {
+  return md
+    .replace(/^#{1,6}\s+/gm, '')       // headings
+    .replace(/\*\*(.+?)\*\*/g, '$1')   // bold
+    .replace(/\*(.+?)\*/g, '$1')       // italic
+    .replace(/^\s*[-*]\s+/gm, '• ')   // bullet lists
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // links → label only
+    .replace(/\n{3,}/g, '\n\n')        // collapse blank lines
+    .trim();
+}
+
+// ── Format a source name from url domain as fallback ───────────────────────
+
+function domainLabel(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
+}
+
 // ── Plan shape from backend ──────────────────────────────────────────────────
 
 interface BackendPlan {
@@ -103,42 +126,52 @@ function adaptScheme(s: BackendScheme, idx: number) {
   let eligibilityStatus: 'eligible' | 'check' | 'ineligible' = 'eligible';
   if (eligStatus && !eligStatus.eligible) eligibilityStatus = 'ineligible';
 
+  const rawBenefits = s.top_benefits || s.benefits_summary || '';
+  const benefitsSummary = stripMarkdown(rawBenefits);
+  const sourceUrl = s.citation || s.source_url || s.apply_link || '';
+
   return {
     id: s.scheme_id || s.id || `s${idx}`,
     name: s.scheme_name || s.name || 'Unknown scheme',
     eligibilityStatus,
-    benefitsSummary: s.top_benefits || s.benefits_summary || '',
-    sourceUrl: s.citation || s.source_url || s.apply_link || '',
-    sourceName: s.source_name || '',
+    benefitsSummary,
+    sourceUrl,
+    sourceName: s.source_name || (sourceUrl ? domainLabel(sourceUrl) : ''),
     eligibilityCriteria: s.docs_required || [],
     howToApply: s.apply_link ? `Apply at ${s.apply_link}` : undefined,
-    benefit: s.top_benefits || s.benefits_summary || '',
+    benefit: benefitsSummary,
   };
 }
 
 function adaptJob(j: BackendJobMatch, idx: number) {
-  const job = j.job || {};
-  const bestCommute = undefined; // commute not on job items; computed per housing
+  const job = j.job || {} as BackendJobMatch['job'];
+  const sourceUrl = j.citation || job.source_url || '';
+  // job.source is a short key like "ncs" — use domain as display label fallback
+  const sourceName = job.source
+    ? job.source.toUpperCase()
+    : (sourceUrl ? domainLabel(sourceUrl) : '');
+
   return {
     id: job.id || `j${idx}`,
     title: job.title || 'Job opportunity',
     employer: job.employer || '',
     matchScore: j.match_score ?? 0,
-    payMin: job.pay_min,
-    payMax: job.pay_max,
+    payMin: job.pay_min ?? null,
+    payMax: job.pay_max ?? null,
     schemeLink: j.scheme_link || undefined,
-    commuteMinutes: bestCommute,
-    sourceUrl: j.citation || job.source_url || '',
-    sourceName: job.source || '',
+    commuteMinutes: undefined,
+    sourceUrl,
+    sourceName,
     requirements: job.required_skills || [],
-    perks: undefined,
-    howToApply: job.source_url ? `Apply via ${job.source || job.source_url}` : undefined,
+    howToApply: sourceUrl ? `Apply via ${sourceName || sourceUrl}` : undefined,
     matchReason: j.match_reason,
   };
 }
 
 function adaptHousing(h: BackendHousing, idx: number) {
   const bestCommute = h.commute_to_jobs?.[0]?.commute_minutes;
+  const sourceUrl = h.source_url || '';
+  const sourceName = h.source_name || (sourceUrl ? domainLabel(sourceUrl) : '');
   return {
     id: h.id || `h${idx}`,
     name: h.name || 'Housing option',
@@ -146,20 +179,26 @@ function adaptHousing(h: BackendHousing, idx: number) {
     occupancy: h.occupancy || '',
     priceMin: h.price_min,
     commuteMinutes: bestCommute,
-    sourceUrl: h.source_url || '',
-    sourceName: h.source_name || '',
+    sourceUrl,
+    sourceName,
     amenities: h.amenities || [],
     deposit: h.price_min ? `₹${h.price_min.toLocaleString()} (1 month)` : undefined,
-    contact: h.source_url ? `Listed on ${h.source_name || h.source_url} — no broker fee.` : undefined,
+    contact: sourceUrl ? `Listed on ${sourceName} — no broker fee.` : undefined,
   };
 }
 
 function adaptChecklist(items: BackendChecklistItem[]) {
-  return items.map((item, idx) => ({
-    id: item.item_id || `c${idx}`,
-    text: item.text,
-    citations: item.citation ? [{ sourceName: item.category || 'Source', url: item.citation }] : [],
-  }));
+  return items.map((item, idx) => {
+    const url = item.citation || '';
+    const isRealUrl = url.startsWith('http');
+    return {
+      id: item.item_id || `c${idx}`,
+      text: item.text,
+      citations: isRealUrl
+        ? [{ sourceName: domainLabel(url), url }]
+        : [],
+    };
+  });
 }
 
 function adaptFilteredOut(
