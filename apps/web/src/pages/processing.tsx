@@ -25,6 +25,9 @@ interface StepMeta {
 
 const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
 const STALL_TIMEOUT_MS = 3000;
+// Minimum visible time per step so users perceive progress even when the
+// graph runs in <1s. Without this, every step would flash green simultaneously.
+const MIN_STEP_VISIBLE_MS = 350;
 
 export default function ProcessingPage() {
   const { t } = useTranslation();
@@ -69,6 +72,30 @@ export default function ProcessingPage() {
       setStepStatuses((prev) => ({ ...prev, [agent]: status }));
       if (meta && Object.keys(meta).length > 0) {
         setStepMeta((prev) => ({ ...prev, [agent]: meta }));
+      }
+    }
+
+    // Apply incoming agent_step events with a minimum visible time per step
+    // so the UI shows a perceptible progression even when the backend is fast.
+    const stepQueue: Array<{ agent: AgentKey; status: StepStatus; meta?: StepMeta }> = [];
+    let stepDrainPromise: Promise<void> | null = null;
+
+    async function drainStepQueue() {
+      while (stepQueue.length > 0) {
+        const next = stepQueue.shift()!;
+        markStep(next.agent, next.status, next.meta);
+        // Only delay on "running" → keeps the running pulse visible.
+        if (next.status === "running") {
+          await new Promise((res) => setTimeout(res, MIN_STEP_VISIBLE_MS));
+        }
+      }
+      stepDrainPromise = null;
+    }
+
+    function enqueueStep(agent: AgentKey, status: StepStatus, meta?: StepMeta) {
+      stepQueue.push({ agent, status, meta });
+      if (!stepDrainPromise) {
+        stepDrainPromise = drainStepQueue();
       }
     }
 
@@ -118,12 +145,19 @@ export default function ProcessingPage() {
                   if (data.kept !== undefined) meta.kept = data.kept;
                   if (data.filtered !== undefined) meta.filtered = data.filtered;
                   if (data.langsmith_url) meta.langsmithUrl = data.langsmith_url;
-                  markStep(data.agent as AgentKey, status, meta);
+                  enqueueStep(data.agent as AgentKey, status, meta);
                 }
                 if (data.type === "plan") {
                   if (data.langsmith_url) setLangsmithUrl(data.langsmith_url);
                   resetStallTimer();
+                  // Let queued steps finish animating before we navigate.
+                  if (stepDrainPromise) await stepDrainPromise;
                   navigate("/results", { state: { plan: data.plan, profile } });
+                  return;
+                }
+                if (data.type === "error") {
+                  resetStallTimer();
+                  setError(data.message || t("processing.error", "Something went wrong. Please try again."));
                   return;
                 }
                 if (data.type === "done") {

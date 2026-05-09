@@ -1,6 +1,5 @@
-import React from 'react';
 import { EligibilityBadge, MatchScore, CommuteChip, SchemeLinkedBadge, CitationLink } from './Badges';
-import { FileText, Building2, Briefcase, CheckSquare, Square, ChevronRight, ExternalLink } from 'lucide-react';
+import { Building2, CheckSquare, Square, ChevronRight, ExternalLink } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../../lib/utils';
 
@@ -76,9 +75,15 @@ export function JobCard({ job, onClick }: { job: any; onClick: () => void }) {
         </div>
         
         <div className="flex flex-wrap gap-2 mt-3 mb-3">
-          <div className="text-sm font-medium text-gray-900 bg-gray-100 px-2.5 py-1 rounded-md">
-            ₹{job.payMin} - ₹{job.payMax}
-          </div>
+          {(job.payMin != null || job.payMax != null) && (
+            <div className="text-sm font-medium text-gray-900 bg-gray-100 px-2.5 py-1 rounded-md">
+              {job.payMin != null && job.payMax != null
+                ? `₹${job.payMin.toLocaleString()} – ₹${job.payMax.toLocaleString()}`
+                : job.payMin != null
+                ? `₹${job.payMin.toLocaleString()}+`
+                : `Up to ₹${job.payMax!.toLocaleString()}`}
+            </div>
+          )}
           {job.schemeLink && <SchemeLinkedBadge label={job.schemeLink} />}
           {job.commuteMinutes && <CommuteChip minutes={job.commuteMinutes} />}
         </div>

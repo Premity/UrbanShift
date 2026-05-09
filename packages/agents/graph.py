@@ -39,6 +39,7 @@ class AgentState(TypedDict, total=False):
     profile: dict                                          # user profile dict
     seeker_type: str                                       # "job" | "housing" | "both"
     scheme_out: list[dict]                                 # scheme agent output
+    all_scheme_ids: list[str]                              # IDs of every scheme row in DB (for ref-int checks)
     job_out: list[dict]                                    # job agent output
     housing_out: list[dict]                                # housing agent output
     validator_out: dict                                    # {validated, filtered_out}
@@ -116,13 +117,15 @@ async def _scheme_node(state: AgentState) -> dict[str, Any]:
     )
 
     schemes = agent_result.get("schemes", [])
+    all_scheme_ids = [str(s["id"]) for s in all_schemes if s.get("id")]
 
     return {
         "scheme_out": schemes,
-        "agent_steps": [_step_event(
-            "scheme", "complete",
-            items_count=len(schemes),
-        )],
+        "all_scheme_ids": all_scheme_ids,
+        "agent_steps": [
+            _step_event("scheme", "running"),
+            _step_event("scheme", "complete", items_count=len(schemes)),
+        ],
     }
 
 
@@ -135,10 +138,10 @@ async def _job_node(state: AgentState) -> dict[str, Any]:
 
     return {
         "job_out": job_out,
-        "agent_steps": [_step_event(
-            "job", "complete",
-            items_count=len(job_out),
-        )],
+        "agent_steps": [
+            _step_event("job", "running"),
+            _step_event("job", "complete", items_count=len(job_out)),
+        ],
     }
 
 
@@ -158,10 +161,10 @@ async def _housing_node(state: AgentState) -> dict[str, Any]:
 
     node_result: dict[str, Any] = {
         "housing_out": housing_out,
-        "agent_steps": [_step_event(
-            "housing", "complete",
-            items_count=len(housing_out),
-        )],
+        "agent_steps": [
+            _step_event("housing", "running"),
+            _step_event("housing", "complete", items_count=len(housing_out)),
+        ],
     }
     if new_errors:
         node_result["errors"] = new_errors
@@ -192,11 +195,10 @@ async def _validator_node(state: AgentState) -> dict[str, Any]:
 
     node_result: dict[str, Any] = {
         "validator_out": validator_out,
-        "agent_steps": [_step_event(
-            "validator", "complete",
-            kept=kept,
-            filtered=len(filtered_out),
-        )],
+        "agent_steps": [
+            _step_event("validator", "running"),
+            _step_event("validator", "complete", kept=kept, filtered=len(filtered_out)),
+        ],
     }
     if new_errors:
         node_result["errors"] = new_errors

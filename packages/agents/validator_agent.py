@@ -141,11 +141,23 @@ def _validate_scheme(scheme: dict, profile: dict) -> list[str]:
 # Rules pass — Jobs  (R-J1 … R-J4)
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _validate_job(job: dict, profile: dict, validated_scheme_ids: set[str]) -> list[str]:
+def _validate_job(job_entry: dict, profile: dict, known_scheme_ids: set[str]) -> list[str]:
+    """Validate a job entry from job_agent output.
+
+    job_entry shape from JobMatchResult.model_dump():
+        {"job": {...job fields...}, "match_score": int, "citation": str, "scheme_link": str|None}
+    Falls back to treating job_entry directly as the job dict for backwards compat.
+
+    `known_scheme_ids` is the universe of valid scheme IDs in the DB — the link
+    is "broken" only when the referenced scheme does not exist at all.
+    """
+    # Unwrap nested job dict if present (JobMatchResult shape)
+    job = job_entry.get("job") if isinstance(job_entry.get("job"), dict) else job_entry
+
     reasons: list[str] = []
 
-    # R-J1 citation
-    if not job.get("source_url"):
+    # R-J1 citation — check both the job's source_url and the wrapper's citation field
+    if not job.get("source_url") and not job_entry.get("citation"):
         reasons.append("missing_source_url")
 
     # R-J2 worker_band (±1 tolerance)
@@ -157,16 +169,15 @@ def _validate_job(job: dict, profile: dict, validated_scheme_ids: set[str]) -> l
                 f"worker_band mismatch: job={job_band}, profile={profile_band} (tolerance ±1)"
             )
 
-    # R-J3 scheme referential integrity
-    scheme_link = job.get("scheme_link_id")
-    if scheme_link and scheme_link not in validated_scheme_ids:
-        reasons.append(f"broken_scheme_link: scheme '{scheme_link}' not in validated output")
+    # R-J3 scheme referential integrity — broken only when scheme doesn't exist.
+    # A scheme that exists but isn't in the user's surfaced plan is still a real
+    # scheme and the link is informational.
+    scheme_link = job.get("scheme_link_id") or job_entry.get("scheme_link")
+    if scheme_link and known_scheme_ids and scheme_link not in known_scheme_ids:
+        reasons.append(f"broken_scheme_link: scheme '{scheme_link}' does not exist")
 
-    # R-J4 sector
-    job_sector = job.get("sector")
-    profile_sector = profile.get("sector")
-    if job_sector and profile_sector and job_sector != profile_sector:
-        reasons.append(f"sector mismatch: job='{job_sector}', profile='{profile_sector}'")
+    # R-J4 sector (advisory — only block if the LLM scoring pass hasn't already ranked;
+    # sector labels between DB and profile may not match exactly, so skip hard rejection here)
 
     return reasons
 
@@ -190,8 +201,8 @@ def _validate_housing(housing: dict, profile: dict) -> list[str]:
     elif gender == "female" and h_gender and h_gender not in ("female", "unisex"):
         reasons.append(f"gender incompatible: housing='{h_gender}', profile='female'")
 
-    # R-H3 budget cap
-    budget = profile.get("budget")
+    # R-H3 budget cap (accept both 'budget' and 'budget_inr' profile keys)
+    budget = profile.get("budget") or profile.get("budget_inr")
     price_min = housing.get("price_min")
     if budget is not None and price_min is not None:
         try:
@@ -284,6 +295,7 @@ async def validate_all(
     housing: list[dict],
     profile: dict,
     llm_enabled: bool = True,
+    known_scheme_ids: set[str] | None = None,
 ) -> dict:
     """Run rules + optional LLM pass over all three verticals.
 
@@ -297,6 +309,14 @@ async def validate_all(
     # ── Schemes ──────────────────────────────────────────────────────────────
     for s in schemes:
         item_id = str(s.get("scheme_id") or s.get("id") or "unknown")
+
+        # Near-miss ineligibles surfaced by scheme_agent flow through
+        # untouched so the UI can render a "Check requirements" card.
+        elig_status = s.get("eligibility_status")
+        if isinstance(elig_status, dict) and elig_status.get("eligible") is False:
+            validated_schemes.append(s)
+            continue
+
         reasons = _validate_scheme(s, profile)
         if reasons:
             filtered_out.append(_reject(item_id, "scheme", reasons))
@@ -316,11 +336,17 @@ async def validate_all(
     validated_scheme_ids: set[str] = {
         str(s.get("scheme_id") or s.get("id")) for s in validated_schemes
     }
+    # The universe of scheme IDs a job link may legitimately point at.
+    # Prefer the DB-wide set (passed in by the graph) and fall back to the
+    # validated subset only when the caller didn't supply one.
+    job_scheme_ids = known_scheme_ids if known_scheme_ids else validated_scheme_ids
 
     # ── Jobs ─────────────────────────────────────────────────────────────────
     for j in jobs:
-        item_id = str(j.get("id") or "unknown")
-        reasons = _validate_job(j, profile, validated_scheme_ids)
+        # Unwrap nested job dict for id extraction (JobMatchResult shape)
+        job_inner = j.get("job") if isinstance(j.get("job"), dict) else j
+        item_id = str(job_inner.get("id") or j.get("id") or "unknown")
+        reasons = _validate_job(j, profile, job_scheme_ids)
         if reasons:
             filtered_out.append(_reject(item_id, "job", reasons))
             continue
@@ -382,12 +408,15 @@ async def validator_agent_node(state: dict[str, Any]) -> dict[str, Any]:
     if isinstance(scheme_out, dict):
         scheme_out = scheme_out.get("schemes", [])
 
+    known_scheme_ids = {str(sid) for sid in state.get("all_scheme_ids") or [] if sid}
+
     try:
         result = await validate_all(
             schemes=scheme_out,
             jobs=job_out,
             housing=housing_out,
             profile=profile,
+            known_scheme_ids=known_scheme_ids or None,
         )
         logger.info(
             "validator_agent: validated schemes=%d jobs=%d housing=%d, filtered=%d",

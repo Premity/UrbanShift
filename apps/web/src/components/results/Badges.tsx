@@ -1,4 +1,3 @@
-import React from 'react';
 import { cn } from '../../lib/utils';
 import { ExternalLink, CheckCircle2, AlertTriangle, XCircle, MapPin, Briefcase } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -17,8 +16,8 @@ export function EligibilityBadge({ status }: { status: 'eligible' | 'check' | 'i
   };
   const labels = {
     eligible: "eligible",
-    check: "check_req",
-    ineligible: "not_eligible",
+    check: "check",
+    ineligible: "ineligible",
   };
   const Icon = icons[status];
   
@@ -68,15 +67,16 @@ export function SchemeLinkedBadge({ label, onClick }: { label: string; onClick?:
 }
 
 export function CitationLink({ url, sourceName }: { url: string; sourceName: string }) {
-  const { t } = useTranslation();
+  if (!url) return null;
+  const label = sourceName || url;
   return (
-    <a 
-      href={url} 
-      target="_blank" 
+    <a
+      href={url}
+      target="_blank"
       rel="noopener noreferrer"
       className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-teal-600 transition-colors mt-2"
     >
-      {t('badges.source', 'Source:')} {sourceName}
+      {label}
       <ExternalLink className="w-3 h-3" />
     </a>
   );
