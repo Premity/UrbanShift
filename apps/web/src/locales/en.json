@@ -87,6 +87,49 @@
       "masonry": "Masonry / Construction"
     }
   },
+  "results": {
+    "next_steps": "Next Steps",
+    "recommended_schemes": "Recommended Schemes",
+    "matched_jobs": "Matched Jobs",
+    "housing_options": "Housing Options",
+    "plan_title": "Your Transition Plan",
+    "plan_desc": "We matched you with schemes, jobs, and housing that fit your profile. Follow these steps to secure your relocation.",
+    "plan_progress": "{{completed}} of {{total}} steps completed",
+    "view_details": "View details",
+    "filtered_items": "items filtered out",
+    "tab_plan": "Plan",
+    "tab_schemes": "Schemes",
+    "tab_jobs": "Jobs",
+    "tab_housing": "Housing",
+    "drawer_benefit": "Benefit",
+    "drawer_eligibility": "Eligibility",
+    "drawer_how_to_apply": "How to Apply",
+    "drawer_employer": "Employer",
+    "drawer_pay": "Pay",
+    "drawer_commute": "Commute",
+    "drawer_linked_scheme": "Linked Scheme",
+    "drawer_requirements": "Requirements",
+    "drawer_perks": "Perks",
+    "drawer_area": "Area",
+    "drawer_occupancy": "Occupancy",
+    "drawer_price_from": "Price from",
+    "drawer_amenities": "Amenities",
+    "drawer_deposit": "Deposit",
+    "drawer_contact": "Contact"
+  },
+  "badges": {
+    "eligible": "Eligible",
+    "check": "Check Eligibility",
+    "ineligible": "Not Eligible",
+    "min_commute": "min commute",
+    "source": "Source:"
+  },
+  "processing": {
+    "title": "Finding your plan…",
+    "subtitle": "Our agents are searching across jobs, schemes, and housing.",
+    "error": "Something went wrong. Please try again.",
+    "go_back": "Go back and try again"
+  },
   "confirm": {
     "title": "Review your profile",
     "subtitle": "Edit anything before we find your plan",
