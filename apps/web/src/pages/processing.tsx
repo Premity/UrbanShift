@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion, useReducedMotion } from "framer-motion";
+import { ExternalLink } from "lucide-react";
 import { Header } from "../components/shared/Header";
 
 const AGENT_STEPS = [
@@ -16,7 +17,14 @@ const AGENT_STEPS = [
 type AgentKey = (typeof AGENT_STEPS)[number]["key"];
 type StepStatus = "pending" | "running" | "complete";
 
+interface StepMeta {
+  kept?: number;
+  filtered?: number;
+  langsmithUrl?: string;
+}
+
 const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+const STALL_TIMEOUT_MS = 3000;
 
 export default function ProcessingPage() {
   const { t } = useTranslation();
@@ -32,7 +40,11 @@ export default function ProcessingPage() {
     AGENT_STEPS.forEach((s) => { init[s.key] = "pending"; });
     return init;
   });
+  const [stepMeta, setStepMeta] = useState<Partial<Record<AgentKey, StepMeta>>>({});
+  const [stalled, setStalled] = useState(false);
+  const [langsmithUrl, setLangsmithUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const stallTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Visible steps — omit housing/job when seeker_type is job/housing respectively
   const visibleSteps = AGENT_STEPS.filter((s) => {
@@ -44,8 +56,20 @@ export default function ProcessingPage() {
   useEffect(() => {
     const abortController = new AbortController();
 
-    function markStep(agent: AgentKey, status: StepStatus) {
+    // Start stall timer — show skeleton if no events arrive within STALL_TIMEOUT_MS
+    stallTimerRef.current = setTimeout(() => setStalled(true), STALL_TIMEOUT_MS);
+
+    function resetStallTimer() {
+      if (stallTimerRef.current) clearTimeout(stallTimerRef.current);
+      setStalled(false);
+    }
+
+    function markStep(agent: AgentKey, status: StepStatus, meta?: StepMeta) {
+      resetStallTimer();
       setStepStatuses((prev) => ({ ...prev, [agent]: status }));
+      if (meta && Object.keys(meta).length > 0) {
+        setStepMeta((prev) => ({ ...prev, [agent]: meta }));
+      }
     }
 
     async function streamGraph() {
@@ -76,7 +100,7 @@ export default function ProcessingPage() {
           if (done) break;
 
           buffer += decoder.decode(value, { stream: true });
-          
+
           // Process SSE lines
           const lines = buffer.split('\n');
           buffer = lines.pop() || ""; // Keep the last incomplete line in buffer
@@ -85,18 +109,26 @@ export default function ProcessingPage() {
             if (line.startsWith("data: ")) {
               const dataStr = line.substring(6).trim();
               if (!dataStr) continue;
-              
+
               try {
                 const data = JSON.parse(dataStr);
                 if (data.type === "agent_step") {
-                  markStep(data.agent as AgentKey, data.status === "running" ? "running" : "complete");
+                  const status: StepStatus = data.status === "running" ? "running" : "complete";
+                  const meta: StepMeta = {};
+                  if (data.kept !== undefined) meta.kept = data.kept;
+                  if (data.filtered !== undefined) meta.filtered = data.filtered;
+                  if (data.langsmith_url) meta.langsmithUrl = data.langsmith_url;
+                  markStep(data.agent as AgentKey, status, meta);
                 }
                 if (data.type === "plan") {
+                  if (data.langsmith_url) setLangsmithUrl(data.langsmith_url);
+                  resetStallTimer();
                   navigate("/results", { state: { plan: data.plan, profile } });
-                  return; // Stop reading on success
+                  return;
                 }
                 if (data.type === "done") {
-                  return; // Stop reading
+                  resetStallTimer();
+                  return;
                 }
               } catch (e) {
                 // Ignore parsing errors for partial/invalid chunks
@@ -113,6 +145,7 @@ export default function ProcessingPage() {
     streamGraph();
 
     return () => {
+      if (stallTimerRef.current) clearTimeout(stallTimerRef.current);
       abortController.abort();
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -137,58 +170,115 @@ export default function ProcessingPage() {
           </p>
         </motion.div>
 
+        {/* Stall skeleton — shown when SSE hasn't arrived within 3s */}
+        {stalled && !error && (
+          <motion.div
+            initial={reduced ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="w-full flex flex-col gap-3"
+            aria-label="Loading"
+          >
+            {[...Array(visibleSteps.length)].map((_, i) => (
+              <div
+                key={i}
+                className="h-[46px] rounded-xl border border-border bg-muted/40 animate-pulse"
+                style={{ animationDelay: `${i * 80}ms` }}
+              />
+            ))}
+          </motion.div>
+        )}
+
         {/* Agent step indicators */}
-        <div className="w-full flex flex-col gap-3">
-          {visibleSteps.map((step, i) => {
-            const status = stepStatuses[step.key];
-            return (
-              <motion.div
-                key={step.key}
-                initial={reduced ? false : { opacity: 0, x: -12 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.07, duration: 0.3 }}
-                className={`flex items-center gap-3 rounded-xl border px-4 py-3 transition-colors duration-300 ${
-                  status === "complete"
-                    ? "border-primary/40 bg-primary/5"
-                    : status === "running"
-                    ? "border-primary/60 bg-primary/10"
-                    : "border-border bg-background"
-                }`}
-              >
-                {/* Status dot */}
-                <span
-                  aria-hidden="true"
-                  className={`w-2.5 h-2.5 rounded-full shrink-0 transition-colors duration-300 ${
+        {!stalled && (
+          <div className="w-full flex flex-col gap-3">
+            {visibleSteps.map((step, i) => {
+              const status = stepStatuses[step.key];
+              const meta = stepMeta[step.key];
+              return (
+                <motion.div
+                  key={step.key}
+                  initial={reduced ? false : { opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.07, duration: 0.3 }}
+                  className={`flex items-center gap-3 rounded-xl border px-4 py-3 transition-colors duration-300 ${
                     status === "complete"
-                      ? "bg-primary"
+                      ? "border-primary/40 bg-primary/5"
                       : status === "running"
-                      ? "bg-primary animate-pulse"
-                      : "bg-muted-foreground/30"
-                  }`}
-                />
-                <span
-                  className={`text-sm font-medium transition-colors duration-300 ${
-                    status === "pending" ? "text-muted-foreground" : "text-foreground"
+                      ? "border-primary/60 bg-primary/10"
+                      : "border-border bg-background"
                   }`}
                 >
-                  {step.label}
-                </span>
-                {status === "complete" && (
-                  <motion.span
-                    initial={reduced ? false : { scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="ml-auto text-xs font-medium text-primary"
+                  {/* Status dot */}
+                  <span
+                    aria-hidden="true"
+                    className={`w-2.5 h-2.5 rounded-full shrink-0 transition-colors duration-300 ${
+                      status === "complete"
+                        ? "bg-primary"
+                        : status === "running"
+                        ? "bg-primary animate-pulse"
+                        : "bg-muted-foreground/30"
+                    }`}
+                  />
+                  <span
+                    className={`text-sm font-medium transition-colors duration-300 ${
+                      status === "pending" ? "text-muted-foreground" : "text-foreground"
+                    }`}
                   >
-                    ✓ Done
-                  </motion.span>
-                )}
-                {status === "running" && (
-                  <span className="ml-auto text-xs text-muted-foreground animate-pulse">Running…</span>
-                )}
-              </motion.div>
-            );
-          })}
-        </div>
+                    {step.label}
+                  </span>
+
+                  {/* Validator kept/filtered counts */}
+                  {status === "complete" && step.key === "validator" && meta && (
+                    <span className="ml-auto text-xs text-muted-foreground">
+                      kept {meta.kept ?? 0} / filtered {meta.filtered ?? 0}
+                    </span>
+                  )}
+
+                  {/* Generic done marker for non-validator steps */}
+                  {status === "complete" && step.key !== "validator" && (
+                    <motion.span
+                      initial={reduced ? false : { scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="ml-auto text-xs font-medium text-primary"
+                    >
+                      ✓ Done
+                    </motion.span>
+                  )}
+
+                  {/* LangSmith link per step (when available) */}
+                  {status === "complete" && meta?.langsmithUrl && (
+                    <a
+                      href={meta.langsmithUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="ml-2 text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-0.5"
+                      aria-label="View trace in LangSmith"
+                    >
+                      Trace <ExternalLink className="w-3 h-3" />
+                    </a>
+                  )}
+
+                  {status === "running" && (
+                    <span className="ml-auto text-xs text-muted-foreground animate-pulse">Running…</span>
+                  )}
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Plan-level LangSmith trace link */}
+        {langsmithUrl && (
+          <a
+            href={langsmithUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1"
+          >
+            View trace <ExternalLink className="w-3 h-3" />
+          </a>
+        )}
 
         {error && (
           <div role="alert" className="w-full rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3">

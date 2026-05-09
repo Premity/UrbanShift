@@ -131,6 +131,7 @@ function TextField({
 function MultiTextField({
   id,
   label,
+  hint,
   value,
   onChange,
   placeholder,
@@ -139,6 +140,7 @@ function MultiTextField({
 }: {
   id: string;
   label: string;
+  hint: string;
   value: string[];
   onChange: (v: string[]) => void;
   placeholder?: string;
@@ -150,7 +152,7 @@ function MultiTextField({
     <div className="flex flex-col gap-1">
       <label htmlFor={id} className={`text-xs font-medium uppercase tracking-wide ${error ? "text-destructive" : "text-muted-foreground"}`}>
         {label}
-        <span className="ml-1 normal-case font-normal text-muted-foreground/70">(comma-separated)</span>
+        <span className="ml-1 normal-case font-normal text-muted-foreground/70">({hint})</span>
       </label>
       <input
         id={id}
@@ -421,6 +423,7 @@ export default function ConfirmPage() {
                   <MultiTextField
                     id="confirm-languages_spoken"
                     label={t("confirm.languages_spoken")}
+                    hint={t("confirm.comma_separated", "comma-separated")}
                     value={field.value}
                     onChange={field.onChange}
                     placeholder="hi, en, kn"
@@ -544,6 +547,7 @@ export default function ConfirmPage() {
                   <MultiTextField
                     id="confirm-skills"
                     label={t("confirm.skills")}
+                    hint={t("confirm.comma_separated", "comma-separated")}
                     value={field.value}
                     onChange={field.onChange}
                     placeholder="driving, customer service…"
@@ -614,6 +618,7 @@ export default function ConfirmPage() {
                     <MultiTextField
                       id="confirm-preferred_areas"
                       label={t("confirm.preferred_areas")}
+                      hint={t("confirm.comma_separated", "comma-separated")}
                       value={field.value}
                       onChange={field.onChange}
                       placeholder="Koramangala, HSR, Whitefield"
